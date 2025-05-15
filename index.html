@@ -4,121 +4,297 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> ASEP-2 SmartCart - Revolutionary Supermarket Billing System</title>
-    <link rel="stylesheet" href="style.css">
+    <title>SmartCart - Revolutionary Supermarket Billing System</title>
+    <meta name="description"
+        content="A web-based smart billing system designed to eliminate long checkout queues in supermarkets. Featuring smartphone barcode scanning, smart trolley with load cells for weight verification, and seamless digital checkout.">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #06b6d4;
+            --primary-dark: #0891b2;
+            --secondary: #3b82f6;
+            --accent: #06b6d4;
+            --light: #f0fdfa;
+            --dark: #0f172a;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #334155;
+            background-color: #f8fafc;
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+
+        .card {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .feature-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 1rem;
+            padding: 1rem;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .step {
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .step:before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background-color: var(--primary);
+        }
+
+        .step:last-child:before {
+            height: 0;
+        }
+
+        .step-number {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            left: 0;
+            top: 0;
+            width: 32px;
+            height: 32px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+        }
+
+        .img-container {
+            overflow: hidden;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .testimonial {
+            background-color: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .ai-card {
+            border-left: 4px solid var(--primary);
+            background-color: white;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .nav-link {
+            position: relative;
+            padding: 0.5rem 1rem;
+            font-weight: 500;
+            color: #334155;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover:after {
+            width: 80%;
+        }  
+
+        @media print {
+            .no-print {
+                display: none;
+            }
+
+            .page-break-avoid {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <header class="head">
-        <div class="head top-0">
-            <nav class="nav">
-                <div class="smartcartdiv">
-                    <h1 class="smartcartdiv-h1">
-                        <span class="gradient-text">Smart</span><span>Cart</span>
-                    </h1>  
+    <!-- Header -->
+    <header class="bg-white sticky top-0 z-50 shadow-sm">
+        <div class="container mx-auto px-4 py-3">
+            <nav class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <h1 class="text-2xl font-bold">
+                        <span class="gradient-text">Smart</span>Cart
+                    </h1>
                 </div>
-                <div class="divnavothers">
-                    <a href="#features" class="navothers">Features</a>
-                    <a href="#how-it-works" class="navothers">How It Works</a>
-                    <a href="#scanner" class="navothers">Scanner</a>
-                    <a href="#checkout" class="navothers">Checkout</a>
-                    <a href="#benefits" class="navothers">Benefits</a>
-                    <a href="#ai-integration" class="navothers">AI integration</a>
-                    <a href="#contact" class="navothers">Contact</a>
+                <div class="hidden md:flex space-x-4">
+                    <a href="#features" class="nav-link">Features</a>
+                    <a href="#how-it-works" class="nav-link">How It Works</a>
+                    <a href="#benefits" class="nav-link">Benefits</a>
+                    <a href="#ai-integration" class="nav-link">AI Integration</a>
+                    <a href="#contact" class="nav-link">Contact</a>
                 </div>
                 <div>
-                    <a href="#getstarted" class="getstart btn">Get Started</a>
+                    <a href="#demo" class="btn-primary">Request Demo</a>
                 </div>
             </nav>
         </div>
     </header>
-    <!-- Uppersection (the future of supermarket) -->
-    <section>
-        <div class="future">
-            <div class="future-inner1div">
-                <h2 class="innner1divH2">The Future of <span class="gradient-text">Supermarket Shopping</span> is Here.
-                </h2>
-                <p class="inner1divP">Say goodbye to long checkout lines. Our web-based smart billing system
-                    revolutionizes the supermarket experience with smartphone scanning, smart trolleys, and seamless
-                    digital checkout.</p>
-                <div>
-                    <a href="#scanner" class="btn getstart">Start Scanning</a>
-                    <a href="#how-it-works" class="getstart howit-btn"><img src="play button.png" class="pbtn"
-                            style="margin-right: 10px;" height="16px" alt="">See How It Works</a>
+
+    <!-- Hero Section -->
+    <section class="py-16 md:py-24">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0 md:pr-10">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-6">
+                        The Future of <span class="gradient-text">Supermarket Shopping</span> is Here
+                    </h2>
+                    <p class="text-lg text-gray-600 mb-8">
+                        Say goodbye to long checkout lines. Our web-based smart billing system revolutionizes the
+                        supermarket experience with smartphone scanning, smart trolleys, and seamless digital checkout.
+                    </p>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                        <a href="#demo" class="btn-primary text-center">Get Started</a>
+                        <a href="#how-it-works" class="btn-primary bg-white text-center"
+                            style="background: white; color: var(--primary);">
+                            <i class="fas fa-play-circle mr-2"></i> See How It Works
+                        </a>
+                    </div>
                 </div>
-            </div>
-            <div>
-                <div>
-                    <img src="ChatGPT Image May 4, 2025, 09_35_46 PM.png" alt="Smart cart interface" class="img-fut" width="700px">
+                <div class="md:w-1/2">
+                    <div class="img-container">
+                        <img src="https://cdn1.genspark.ai/user-upload-image/5_generated/862835bc-b453-40fe-8268-92ab6d25b6df_wm"
+                            alt="SmartCart app interface" class="w-full rounded-lg">
+                    </div>
                 </div>
             </div>
         </div>
     </section>
-    
-    <!-- Features section -->
-    <section id="features">
-        <div>
-            <div class="Feature">
-                <h2 class="revolutionary-f">Revolutionary <span class="gradient-text">Features</span></h2>
-                <p class="para-feature">Combining cutting-edge technology with a user-friendly interface to create the
-                    <br> ultimate shopping experience
-                </p>
+
+    <!-- Features Section -->
+    <section id="features" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Revolutionary <span
+                        class="gradient-text">Features</span></h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Combining cutting-edge technology with a user-friendly
+                    interface to create the ultimate shopping experience</p>
             </div>
-            <div class="Feature-grid">
-                <!-- feature-1 -->
-                <div class="box">
-                    <div>
-                        <img class="feature-img" src="Smartphone barcode.png" alt="">
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="card p-6 page-break-avoid">
+                    <div class="feature-icon mb-6">
+                        <i class="fas fa-mobile-alt"></i>
                     </div>
-                    <h3 class="feature-heading">Smartphone Barcode Scanning</h3>
-                    <p class="feature-para">Use your smartphone to scan product barcodes directly—no external hardware
-                        needed. Our web appturns your phone into a powerful scanner with real-time product recognition.
+                    <h3 class="text-xl font-bold mb-3">Smartphone Barcode Scanning</h3>
+                    <p class="text-gray-600">Use your smartphone to scan product barcodes directly—no external hardware
+                        needed. Our web app turns your phone into a powerful scanner with real-time product recognition.
                     </p>
                 </div>
-                <!-- feature-2 -->
-                <div class="box">
-                    <div>
-                        <img class="feature-img" src="Smarttrolleywithloadcells.png" alt="">
+
+                <!-- Feature 2 -->
+                <div class="card p-6 page-break-avoid">
+                    <div class="feature-icon mb-6">
+                        <i class="fas fa-balance-scale"></i>
                     </div>
-                    <h3 class="feature-heading">Smart Trolley with Load Cells</h3>
-                    <p class="feature-para">Our intelligent trolleys verify item placement through precision load cells
+                    <h3 class="text-xl font-bold mb-3">Smart Trolley with Load Cells</h3>
+                    <p class="text-gray-600">Our intelligent trolleys verify item placement through precision load cells
                         that compare expected and actual weight, preventing errors and ensuring accurate billing.</p>
                 </div>
-                <!-- feature-3 -->
-                <div class="box">
-                    <div>
-                        <img class="feature-img" src="VirtualCartManagement.png" alt="">
+
+                <!-- Feature 3 -->
+                <div class="card p-6 page-break-avoid">
+                    <div class="feature-icon mb-6">
+                        <i class="fas fa-shopping-cart"></i>
                     </div>
-                    <h3 class="feature-heading">Virtual Cart Management</h3>
-                    <p class="feature-para">Watch your virtual cart update in real-time as you shop. See product
+                    <h3 class="text-xl font-bold mb-3">Virtual Cart Management</h3>
+                    <p class="text-gray-600">Watch your virtual cart update in real-time as you shop. See product
                         details, price calculations, and running totals—all dynamically updated with each item.</p>
                 </div>
-                <!-- feature-4 -->
-                <div class="box">
-                    <div>
-                        <img class="feature-img" src="Digital Checkout.png" alt="">
+
+                <!-- Feature 4 -->
+                <div class="card p-6 page-break-avoid">
+                    <div class="feature-icon mb-6">
+                        <i class="fas fa-credit-card"></i>
                     </div>
-                    <h3 class="feature-heading">Digital Checkout</h3>
-                    <p class="feature-para">Skip the lines completely with our seamless digital checkout. Pay directly
+                    <h3 class="text-xl font-bold mb-3">Digital Checkout</h3>
+                    <p class="text-gray-600">Skip the lines completely with our seamless digital checkout. Pay directly
                         through the app with your preferred payment method and receive your digital receipt instantly.
                     </p>
                 </div>
-                <!-- feature-5 -->
-                <div class="box">
-                    <div>
-                        <img class="feature-img" src="Fraud prevention.png" alt="">
+
+                <!-- Feature 5 -->
+                <div class="card p-6 page-break-avoid">
+                    <div class="feature-icon mb-6">
+                        <i class="fas fa-shield-alt"></i>
                     </div>
-                    <h3 class="feature-heading">Fraud Prevention</h3>
-                    <p class="feature-para">Advanced security features including weight verification and AI-powered
+                    <h3 class="text-xl font-bold mb-3">Fraud Prevention</h3>
+                    <p class="text-gray-600">Advanced security features including weight verification and AI-powered
                         product recognition ensure accurate billing and prevent manipulation of the system.</p>
                 </div>
-                <!-- feature-6 -->
-                <div class="box">
-                    <div>
-                        <img class="feature-img" src="CustomerInsights.png" alt="">
+
+                <!-- Feature 6 -->
+                <div class="card p-6 page-break-avoid">
+                    <div class="feature-icon mb-6">
+                        <i class="fas fa-chart-line"></i>
                     </div>
-                    <h3 class="feature-heading">Customer Insights</h3>
-                    <p class="feature-para">Gain valuable insights into shopping patterns and preferences, enabling
+                    <h3 class="text-xl font-bold mb-3">Customer Insights</h3>
+                    <p class="text-gray-600">Gain valuable insights into shopping patterns and preferences, enabling
                         personalized offers and improved store layouts to enhance the customer experience.</p>
                 </div>
             </div>
@@ -126,53 +302,561 @@
     </section>
 
     <!-- How It Works Section -->
-    <section id="how-it-works">
-        <div class="Feature">
-            <div class="Feature">
-                <h2 class="revolutionary-f">How <span class="gradient-text">SmartCart</span> Works</h2>
-                <p class="para-feature">A seamless shopping experience from start to finish</p>
+    <section id="how-it-works" class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">How <span class="gradient-text">SmartCart</span> Works
+                </h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">A seamless shopping experience from start to finish</p>
             </div>
-            <div class="hiw-both">
-            <div class="how-it-works-grid">
-                <div class="hiw-box">
-                    <div class="hiw-both">
-                        <span class="bulletno">1</span>
-                        <h2 class="hiw-h2">Grab a Smart Trolley</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center mb-16">
+                <div>
+                    <div class="mb-10 page-break-avoid">
+                        <div class="step pb-10">
+                            <div class="step-number">1</div>
+                            <h3 class="text-xl font-bold mb-2">Grab a Smart Trolley</h3>
+                            <p class="text-gray-600">Select any trolley from the entrance. Each cart is equipped with
+                                load cells at the base for weight verification and a smartphone mount on the handle.</p>
+                        </div>
                     </div>
-                    <p class="hiw-para">Select any trolley from the entrance. Each cart is equipped with load cells at
-                        the base for weight verification and a smartphone mount on the handle.</p>
+
+                    <div class="mb-10 page-break-avoid">
+                        <div class="step pb-10">
+                            <div class="step-number">2</div>
+                            <h3 class="text-xl font-bold mb-2">Scan & Shop</h3>
+                            <p class="text-gray-600">Use your smartphone to scan product barcodes before placing them in
+                                the trolley. The app identifies each product instantly, showing details and price.</p>
+                        </div>
+                    </div>
+
+                    <div class="mb-10 page-break-avoid">
+                        <div class="step pb-10">
+                            <div class="step-number">3</div>
+                            <h3 class="text-xl font-bold mb-2">Weight Verification</h3>
+                            <p class="text-gray-600">The smart trolley's load cells automatically verify the weight of
+                                added items, comparing it to the expected weight to ensure accuracy.</p>
+                        </div>
+                    </div>
+
+                    <div class="page-break-avoid">
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <h3 class="text-xl font-bold mb-2">Digital Checkout</h3>
+                            <p class="text-gray-600">When you're done shopping, complete your purchase through the app.
+                                Payment is processed digitally, and your receipt is sent instantly to your smartphone.
+                            </p>
+                        </div>
+                    </div>
                 </div>
-                <div class="hiw-box">
-                    <div class="hiw-both">
-                        <span class="bulletno">2</span>
-                        <h2 class="hiw-h2">Scan & Shop</h2>
+
+                <div>
+                    <div class="img-container">
+                        <img src="https://cdn1.genspark.ai/user-upload-image/5_generated/18613eb3-8444-447d-a27c-cde53ccfb34a_wm"
+                            alt="SmartCart system diagram" class="w-full">
                     </div>
-                    <p class="hiw-para">Use your smartphone to scan product barcodes before placing them in the
-                        trolley. The app identifies each product instantly, showing details and price.</p>
-                </div>
-                <div class="hiw-box">
-                    <div class="hiw-both">
-                        <span class="bulletno">3</span>
-                        <h2 class="hiw-h2">Weight Verification</h2>
-                    </div>
-                    <p class="hiw-para">The smart trolley's load cells automatically verify the weight of added items,
-                        comparing it to the expected weight to ensure accuracy.</p>
-                </div>
-                <div class="hiw-box">
-                    <div class="hiw-both">
-                        <span class="bulletno">4</span>
-                        <h2 class="hiw-h2">Digital Checkout</h2>
-                    </div>
-                    <p class="hiw-para">When you're done shopping, complete your purchase through the app. Payment is
-                        processed digitally, and your receipt is sent instantly to your smartphone.</p>
                 </div>
             </div>
-            <div class="hiw-div-img">
-                <img src="cfimages (2).avif" class="hiw-img" alt="">
-            </div>
-        </div>
         </div>
     </section>
+
+    <!-- Demonstration Section -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">See <span class="gradient-text">SmartCart</span> in
+                    Action</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Experience the future of supermarket shopping</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div>
+                    <h3 class="text-2xl font-bold mb-4">Streamline Your Shopping Experience</h3>
+                    <p class="text-gray-600 mb-6">Watch how easy it is to use SmartCart in a real supermarket
+                        environment. Our technology integrates seamlessly with your shopping routine while eliminating
+                        checkout lines and wait times.</p>
+
+                    <div class="mb-8">
+                        <div class="flex items-start mb-4">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                            <p><strong>60% faster</strong> shopping experience compared to traditional checkout</p>
+                        </div>
+                        <div class="flex items-start mb-4">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                            <p><strong>99.7% accuracy</strong> in weight verification and product identification</p>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                            <p><strong>92% of customers</strong> prefer SmartCart over traditional shopping methods</p>
+                        </div>
+                    </div>
+
+                    <a href="#demo" class="btn-primary inline-block">Request a Live Demo</a>
+                </div>
+
+                <div>
+                    <div class="img-container">
+                        <img src="https://cdn1.genspark.ai/user-upload-image/5_generated/8e41f592-038e-4819-85e6-1dc767069371_wm"
+                            alt="SmartCart demo" class="w-full">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section id="benefits" class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Benefits for <span class="gradient-text">Everyone</span>
+                </h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Our smart billing system creates value for shoppers and
+                    supermarkets alike</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+                <!-- Benefits for Shoppers -->
+                <div class="page-break-avoid">
+                    <h3 class="text-2xl font-bold mb-6 gradient-text">For Shoppers</h3>
+
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="bg-blue-100 rounded-full p-2 mr-4 mt-1">
+                                <i class="fas fa-clock text-blue-500"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold mb-2">Save Time</h4>
+                                <p class="text-gray-600">Eliminate waiting in checkout lines, dramatically reducing your
+                                    time spent in the supermarket.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="bg-blue-100 rounded-full p-2 mr-4 mt-1">
+                                <i class="fas fa-receipt text-blue-500"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold mb-2">Real-Time Budget Tracking</h4>
+                                <p class="text-gray-600">Monitor your spending as you shop with a running total that
+                                    updates with each item added to your cart.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="bg-blue-100 rounded-full p-2 mr-4 mt-1">
+                                <i class="fas fa-tags text-blue-500"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold mb-2">Personalized Offers</h4>
+                                <p class="text-gray-600">Receive customized promotions and discounts based on your
+                                    shopping preferences and history.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="bg-blue-100 rounded-full p-2 mr-4 mt-1">
+                                <i class="fas fa-mobile text-blue-500"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold mb-2">Digital Receipts</h4>
+                                <p class="text-gray-600">Access your shopping history and receipts digitally at any
+                                    time, making expense tracking and returns easier.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Benefits for Supermarkets -->
+                <div class="page-break-avoid">
+                    <h3 class="text-2xl font-bold mb-6 gradient-text">For Supermarkets</h3>
+
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="bg-cyan-100 rounded-full p-2 mr-4 mt-1">
+                                <i class="fas fa-store text-cyan-500"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold mb-2">Optimize Store Operations</h4>
+                                <p class="text-gray-600">Reduce checkout staff needs while enhancing the customer
+                                    experience and increasing throughput.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="bg-cyan-100 rounded-full p-2 mr-4 mt-1">
+                                <i class="fas fa-chart-pie text-cyan-500"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold mb-2">Valuable Customer Insights</h4>
+                                <p class="text-gray-600">Gain detailed analytics on shopping patterns, product
+                                    preferences, and store navigation to optimize layouts and inventory.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="bg-cyan-100 rounded-full p-2 mr-4 mt-1">
+                                <i class="fas fa-hand-holding-usd text-cyan-500"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold mb-2">Reduced Shrinkage</h4>
+                                <p class="text-gray-600">Decrease theft and checkout errors through accurate weight
+                                    verification and AI-powered product recognition.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="bg-cyan-100 rounded-full p-2 mr-4 mt-1">
+                                <i class="fas fa-users text-cyan-500"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold mb-2">Enhanced Customer Loyalty</h4>
+                                <p class="text-gray-600">Build stronger relationships with shoppers through a modern,
+                                    convenient shopping experience that keeps them coming back.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Integration Section -->
+    <section id="ai-integration" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Powered by <span class="gradient-text">Advanced
+                        AI</span></h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Our system leverages cutting-edge artificial intelligence to
+                    create a seamless shopping experience</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="space-y-6">
+                    <div class="ai-card page-break-avoid">
+                        <h3 class="text-xl font-bold mb-3">Computer Vision Product Recognition</h3>
+                        <p class="text-gray-600">Our AI vision system can identify products even when barcodes are
+                            damaged or obscured, ensuring a smooth shopping experience in all situations.</p>
+                    </div>
+
+                    <div class="ai-card page-break-avoid">
+                        <h3 class="text-xl font-bold mb-3">Fraud Detection Algorithms</h3>
+                        <p class="text-gray-600">Advanced machine learning models detect unusual patterns in shopping
+                            behavior and weight discrepancies to prevent theft and ensure accurate billing.</p>
+                    </div>
+
+                    <div class="ai-card page-break-avoid">
+                        <h3 class="text-xl font-bold mb-3">Personalized Recommendation Engine</h3>
+                        <p class="text-gray-600">Our AI analyzes shopping history to provide personalized product
+                            recommendations and relevant promotions while you shop.</p>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="ai-card page-break-avoid">
+                        <h3 class="text-xl font-bold mb-3">Predictive Inventory Management</h3>
+                        <p class="text-gray-600">AI forecasting helps supermarkets optimize stock levels based on
+                            real-time shopping data, reducing waste and ensuring product availability.</p>
+                    </div>
+
+                    <div class="ai-card page-break-avoid">
+                        <h3 class="text-xl font-bold mb-3">Natural Language Processing</h3>
+                        <p class="text-gray-600">Voice-enabled product search and assistance makes finding items in the
+                            store easier than ever, especially for customers with accessibility needs.</p>
+                    </div>
+
+                    <div class="ai-card page-break-avoid">
+                        <h3 class="text-xl font-bold mb-3">Traffic Flow Optimization</h3>
+                        <p class="text-gray-600">AI analysis of shopping patterns helps supermarkets optimize store
+                            layouts and staffing to improve the overall shopping experience.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">What Our <span class="gradient-text">Users Say</span>
+                </h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Join thousands of satisfied customers and supermarkets
+                    already using SmartCart</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="testimonial page-break-avoid">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 flex">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">"I can't believe how much time I save on my weekly grocery trips. No
+                        more standing in long checkout lines! The app is intuitive, and scanning products with my phone
+                        is incredibly easy."</p>
+                    <div class="flex items-center">
+                        <div class="mr-4">
+                            <div
+                                class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">
+                                SJ
+                            </div>
+                        </div>
+                        <div>
+                            <p class="font-bold">Sarah Johnson</p>
+                            <p class="text-sm text-gray-500">Regular Shopper</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="testimonial page-break-avoid">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 flex">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">"Implementing SmartCart in our stores has increased customer
+                        satisfaction by 35% and reduced checkout times by over 60%. The ROI has been remarkable, with
+                        reduced staffing costs and increased throughput."</p>
+                    <div class="flex items-center">
+                        <div class="mr-4">
+                            <div
+                                class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white font-bold">
+                                RM
+                            </div>
+                        </div>
+                        <div>
+                            <p class="font-bold">Robert Martinez</p>
+                            <p class="text-sm text-gray-500">Supermarket Manager</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="testimonial page-break-avoid">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 flex">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">"As someone who hates waiting in lines, SmartCart has completely
+                        transformed my shopping experience. I love being able to track my spending in real-time, and the
+                        digital receipts make expense tracking so much easier."</p>
+                    <div class="flex items-center">
+                        <div class="mr-4">
+                            <div
+                                class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center text-white font-bold">
+                                AL
+                            </div>
+                        </div>
+                        <div>
+                            <p class="font-bold">Amanda Lee</p>
+                            <p class="text-sm text-gray-500">Business Professional</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Request Section -->
+    <section id="demo" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto">
+                <div class="text-center mb-10">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">Ready to <span
+                            class="gradient-text">Transform</span> Your Shopping Experience?</h2>
+                    <p class="text-gray-600">Request a demo today and see SmartCart in action at your supermarket</p>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-8">
+                    <form class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="first-name" class="block text-sm font-medium text-gray-700 mb-1">First
+                                    Name</label>
+                                <input type="text" id="first-name" name="first-name"
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                            </div>
+
+                            <div>
+                                <label for="last-name" class="block text-sm font-medium text-gray-700 mb-1">Last
+                                    Name</label>
+                                <input type="text" id="last-name" name="last-name"
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email
+                                Address</label>
+                            <input type="email" id="email" name="email"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+
+                        <div>
+                            <label for="company" class="block text-sm font-medium text-gray-700 mb-1">Company</label>
+                            <input type="text" id="company" name="company"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Tell us about your
+                                needs</label>
+                            <textarea id="message" name="message" rows="4"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"></textarea>
+                        </div>
+
+                        <div>
+                            <button type="submit" class="w-full btn-primary">
+                                Request Demo
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Get in <span class="gradient-text">Touch</span></h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Have questions about SmartCart? Our team is here to help.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center page-break-avoid">
+                    <div class="feature-icon mx-auto mb-6">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Email Us</h3>
+                    <p class="text-gray-600">info@smartcart.com</p>
+                    <p class="text-gray-600">support@smartcart.com</p>
+                </div>
+
+                <div class="text-center page-break-avoid">
+                    <div class="feature-icon mx-auto mb-6">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Call Us</h3>
+                    <p class="text-gray-600">+1 (800) 123-4567</p>
+                    <p class="text-gray-600">Mon-Fri, 9am-5pm EST</p>
+                </div>
+
+                <div class="text-center page-break-avoid">
+                    <div class="feature-icon mx-auto mb-6">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Visit Us</h3>
+                    <p class="text-gray-600">123 Innovation Drive</p>
+                    <p class="text-gray-600">Tech City, TC 12345</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 gradient-bg">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6 text-white">Ready to Revolutionize Your Supermarket?</h2>
+            <p class="text-white text-lg mb-8 max-w-2xl mx-auto">Join the growing number of supermarkets and shoppers
+                enjoying the benefits of SmartCart's innovative technology.</p>
+            <a href="#demo"
+                class="bg-white text-blue-600 px-8 py-3 rounded-md font-medium hover:bg-gray-100 transition duration-300">Get
+                Started Today</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">SmartCart</h3>
+                    <p class="text-gray-400">Revolutionizing the supermarket shopping experience with cutting-edge
+                        technology and seamless digital solutions.</p>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#features"
+                                class="text-gray-400 hover:text-white transition duration-300">Features</a></li>
+                        <li><a href="#how-it-works" class="text-gray-400 hover:text-white transition duration-300">How
+                                It Works</a></li>
+                        <li><a href="#benefits"
+                                class="text-gray-400 hover:text-white transition duration-300">Benefits</a></li>
+                        <li><a href="#ai-integration" class="text-gray-400 hover:text-white transition duration-300">AI
+                                Integration</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Resources</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Blog</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Case Studies</a>
+                        </li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Support
+                                Center</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Documentation</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Connect With Us</h4>
+                    <div class="flex space-x-4 mb-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                    <p class="text-gray-400">Subscribe to our newsletter for updates</p>
+                    <div class="flex mt-2">
+                        <input type="email" placeholder="Your email"
+                            class="px-4 py-2 w-full rounded-l-md focus:outline-none text-gray-800">
+                        <button
+                            class="bg-blue-500 text-white px-4 py-2 rounded-r-md hover:bg-blue-600 transition duration-300">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 pt-8 text-center">
+                <p class="text-gray-400">&copy; 2025 SmartCart. All rights reserved.</p>
+                <div class="flex justify-center space-x-4 mt-4">
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">Terms of Service</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
 </body>
 
 </html>
