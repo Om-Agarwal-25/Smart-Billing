@@ -4,8 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> ASEP-2 SmartCart - Revolutionary Supermarket Billing System</title>
+    <title> SmartCart - Revolutionary Supermarket Billing System</title>
     <link rel="stylesheet" href="style.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 </head>
 
 <body>
@@ -277,6 +282,116 @@
         <h3 class="feature-heading">Ready to Transform Your Billing with AI?</h3>
         <a href="index.html#getstarted" class="btn getstart" style="margin-top:14px;">Get Started with Smart Billing AI</a>
       </div>
+    </section>
+
+    <section class="contact-us">
+        <h2 class="revolutionary-f">Get in <span class="gradient-text">Touch</span></h2>
+        <p class="para-feature">A seamless shopping experience from start to finish</p>
+        <div class="contact-grid">
+            <div class="contact-card">
+                <img src="email.png" alt="email">
+                <h4>Email Us</h4>
+                <p>info@smartcart.com</p>  
+                <p>support@smartcart.com</p>
+            </div>
+            <div class="contact-card">
+                <img src="call.png" alt="call">
+                <h4>Call Us</h4>
+                <p>+91 (800) 123-4567</p>
+                <p>Mon-Fri, 9am-5pm IST</p>
+            </div>
+            <div class="contact-card">
+                <img src="visit.png" alt="location">
+                <h4>Visit Us</h4>
+                <p>123 Innovation Drive</p>
+                <p>Tech City, TC 12345</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scanner Section -->
+    <section id="scanner" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">Scan & Shop</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Scan barcodes directly with your device camera. Add items to your cart instantly without waiting in line.</p>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-8">
+                <div class="lg:w-1/2">
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-xl font-semibold text-gray-800">Barcode Scanner</h3>
+                            <button id="startButton" class="btn-primary px-4 py-2 rounded-md text-sm">Start Scanner</button>
+                        </div>
+                        <div id="reader-container" class="scanner-container">
+                            <div id="reader"></div>
+                        </div>
+                        <div class="mt-4">
+                            <p class="text-sm text-gray-500">Point your camera at a product barcode to scan</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">Smart Trolley Weight Verification</h3>
+                        <div class="flex items-center mb-4">
+                            <div class="mr-4">
+                                <span class="text-sm text-gray-500">Expected Weight:</span>
+                                <span id="expected-weight" class="text-lg font-semibold text-gray-800">0.00 kg</span>
+                            </div>
+                            <div>
+                                <span class="text-sm text-gray-500">Actual Weight:</span>
+                                <span id="actual-weight" class="text-lg font-semibold text-gray-800">0.00 kg</span>
+                            </div>
+                        </div>
+                        <div class="weight-indicator mb-2">
+                            <div id="weight-bar" class="weight-bar"></div>
+                        </div>
+                        <div id="weight-status" class="text-sm font-medium text-green-600">
+                            <i class="fas fa-check-circle mr-1"></i> Weight verified
+                        </div>
+                        <div class="mt-4 trolley-animation flex justify-center">
+                            <svg width="150" height="100" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M18 6H16C16 3.79 14.21 2 12 2C9.79 2 8 3.79 8 6H6C4.9 6 4 6.9 4 8V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V8C20 6.9 19.1 6 18 6ZM12 4C13.1 4 14 4.9 14 6H10C10 4.9 10.9 4 12 4ZM18 20H6V8H8V10C8 10.55 8.45 11 9 11C9.55 11 10 10.55 10 10V8H14V10C14 10.55 14.45 11 15 11C15.55 11 16 10.55 16 10V8H18V20Z" fill="#4F46E5"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lg:w-1/2">
+                    <div class="bg-white rounded-lg shadow-lg p-6 h-full">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-xl font-semibold text-gray-800">Your Cart</h3>
+                            <span id="cart-count" class="bg-indigo-600 text-white text-xs font-bold rounded-full px-2 py-1">0</span>
+                        </div>
+                        <div id="cart-items" class="scanner-result mb-6">
+                            <div class="text-center py-8 text-gray-500">
+                                <i class="fas fa-shopping-cart text-4xl mb-3 text-gray-300"></i>
+                                <p>Your cart is empty</p>
+                                <p class="text-sm mt-2">Scan products to add them to your cart</p>
+                            </div>
+                        </div>
+                        <div class="border-t pt-4">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-600">Subtotal</span>
+                                <span id="subtotal" class="font-semibold">$0.00</span>
+                            </div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-600">Tax (10%)</span>
+                                <span id="tax" class="font-semibold">$0.00</span>
+                            </div>
+                            <div class="flex justify-between mb-4 pt-2 border-t">
+                                <span class="text-gray-800 font-bold">Total</span>
+                                <span id="total" class="font-bold text-indigo-600">$0.00</span>
+                            </div>
+                            <a href="#checkout" class="btn-primary w-full py-3 text-center rounded-md font-semibold block">
+                                Proceed to Checkout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 </body>
 
