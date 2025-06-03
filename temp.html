@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Trolley Billing System</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #4F46E5;
+            --secondary-color: #8B5CF6;
+            --accent-color: #C4B5FD;
+            --bg-gradient: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+            --card-gradient: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(79, 70, 229, 0.1) 100%);
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #1F2937;
+            overflow-x: hidden;
+        }  
+        
+        .gradient-bg {
+            background: var(--bg-gradient);
+        }
+        
+        .card-gradient {
+            background: var(--card-gradient);
+        }
+        
+        .btn-primary {
+            background: var(--bg-gradient);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.3);
+        }
+        
+        .scanner-container {
+            width: 100%;
+            max-width: 500px;
+            height: 300px;
+            margin: 0 auto;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .hero-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .weight-indicator {
+            width: 200px;
+            height: 8px;
+            background: #E5E7EB;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .weight-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #10B981 0%, #059669 100%);
+            transition: width 0.5s ease;
+        }
+        
+        .product-item {
+            border-left: 4px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .product-item:hover {
+            border-left: 4px solid var(--primary-color);
+            background-color: rgba(124, 58, 237, 0.05);
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .scanner-result {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .trolley-animation {
+            position: relative;
+        }
+        
+        .trolley-animation::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background-color: rgba(124, 58, 237, 0.2);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: translateX(-50%) scale(0.8); opacity: 0.8; }
+            50% { transform: translateX(-50%) scale(1.2); opacity: 0.4; }
+            100% { transform: translateX(-50%) scale(0.8); opacity: 0.8; }
+        }
+        
+        .feature-card {
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .loading-bar {
+            width: 100%;
+            height: 4px;
+            background: #E5E7EB;
+            border-radius: 2px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .loading-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 30%;
+            background: var(--primary-color);
+            animation: loading 1.5s infinite;
+        }
+        
+        @keyframes loading {
+            0% { left: -30%; }
+            100% { left: 100%; }
+        }
+        
+        #reader {
+            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm py-4">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-shopping-cart text-indigo-600 text-2xl"></i>
+                <span class="font-bold text-xl text-indigo-600">SmartTrolley</span>
+            </div>
+            <div class="hidden md:flex space-x-6">
+                <a href="#home" class="nav-link font-medium">Home</a>
+                <a href="#scanner" class="nav-link font-medium">Scanner</a>
+                <a href="#features" class="nav-link font-medium">Features</a>
+                <a href="#checkout" class="nav-link font-medium">Checkout</a>
+            </div>
+            <button class="btn-primary px-4 py-2 rounded-full text-sm font-medium">Get Started</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="gradient-bg text-white py-16">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-6">Shop Smarter, <br>Checkout Faster</h1>
+                    <p class="text-lg mb-8 text-indigo-100">Experience the future of shopping with our Smart Trolley system. No more waiting in checkout lines!</p>
+                    <div class="flex space-x-4">
+                        <a href="#scanner" class="btn-primary bg-white text-indigo-600 px-6 py-3 rounded-full font-semibold">Start Scanning</a>
+                        <a href="#features" class="border-2 border-white px-6 py-3 rounded-full font-semibold hover:bg-white hover:text-indigo-600 transition">Learn More</a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="hero-animation relative">
+                        <svg width="300" height="300" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M256 120C256 133.255 245.255 144 232 144C218.745 144 208 133.255 208 120C208 106.745 218.745 96 232 96C245.255 96 256 106.745 256 120Z" fill="white"/>
+                            <path d="M424 128H352V112C352 103.163 344.837 96 336 96H112C103.163 96 96 103.163 96 112V384H64C55.163 384 48 391.163 48 400C48 408.837 55.163 416 64 416H142.471C130.672 424.625 123.2 438.161 123.2 453.333C123.2 483.076 147.124 507 176.867 507C206.61 507 230.533 483.076 230.533 453.333C230.533 438.161 223.062 424.625 211.263 416H300.737C288.938 424.625 281.467 438.161 281.467 453.333C281.467 483.076 305.39 507 335.133 507C364.876 507 388.8 483.076 388.8 453.333C388.8 438.161 381.328 424.625 369.529 416H448C456.837 416 464 408.837 464 400C464 391.163 456.837 384 448 384H128V368H336C344.837 368 352 360.837 352 352V336H360C368.837 336 376 328.837 376 320V304H392C400.837 304 408 296.837 408 288V272H424C432.837 272 440 264.837 440 256V240H456C464.837 240 472 232.837 472 224V208H488C496.837 208 504 200.837 504 192V160C504 142.327 489.673 128 472 128H424ZM176.867 475C164.859 475 155.2 465.34 155.2 453.333C155.2 441.327 164.859 431.667 176.867 431.667C188.874 431.667 198.533 441.327 198.533 453.333C198.533 465.34 188.874 475 176.867 475ZM335.133 475C323.126 475 313.467 465.34 313.467 453.333C313.467 441.327 323.126 431.667 335.133 431.667C347.141 431.667 356.8 441.327 356.8 453.333C356.8 465.34 347.141 475 335.133 475ZM320 128H128V336H320V128Z" fill="white"/>
+                        </svg>
+                        <div class="absolute -top-4 -right-4 bg-yellow-400 text-indigo-900 rounded-full px-3 py-1 text-sm font-bold shadow-lg">
+                            New
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scanner Section -->
+    <section id="scanner" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">Scan & Shop</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Scan barcodes directly with your device camera. Add items to your cart instantly without waiting in line.</p>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-8">
+                <div class="lg:w-1/2">
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-xl font-semibold text-gray-800">Barcode Scanner</h3>
+                            <button id="startButton" class="btn-primary px-4 py-2 rounded-md text-sm">Start Scanner</button>
+                        </div>
+                        <div id="reader-container" class="scanner-container">
+                            <div id="reader"></div>
+                        </div>
+                        <div class="mt-4">
+                            <p class="text-sm text-gray-500">Point your camera at a product barcode to scan</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">Smart Trolley Weight Verification</h3>
+                        <div class="flex items-center mb-4">
+                            <div class="mr-4">
+                                <span class="text-sm text-gray-500">Expected Weight:</span>
+                                <span id="expected-weight" class="text-lg font-semibold text-gray-800">0.00 kg</span>
+                            </div>
+                            <div>
+                                <span class="text-sm text-gray-500">Actual Weight:</span>
+                                <span id="actual-weight" class="text-lg font-semibold text-gray-800">0.00 kg</span>
+                            </div>
+                        </div>
+                        <div class="weight-indicator mb-2">
+                            <div id="weight-bar" class="weight-bar"></div>
+                        </div>
+                        <div id="weight-status" class="text-sm font-medium text-green-600">
+                            <i class="fas fa-check-circle mr-1"></i> Weight verified
+                        </div>
+                        <div class="mt-4 trolley-animation flex justify-center">
+                            <svg width="150" height="100" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M18 6H16C16 3.79 14.21 2 12 2C9.79 2 8 3.79 8 6H6C4.9 6 4 6.9 4 8V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V8C20 6.9 19.1 6 18 6ZM12 4C13.1 4 14 4.9 14 6H10C10 4.9 10.9 4 12 4ZM18 20H6V8H8V10C8 10.55 8.45 11 9 11C9.55 11 10 10.55 10 10V8H14V10C14 10.55 14.45 11 15 11C15.55 11 16 10.55 16 10V8H18V20Z" fill="#4F46E5"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lg:w-1/2">
+                    <div class="bg-white rounded-lg shadow-lg p-6 h-full">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-xl font-semibold text-gray-800">Your Cart</h3>
+                            <span id="cart-count" class="bg-indigo-600 text-white text-xs font-bold rounded-full px-2 py-1">0</span>
+                        </div>
+                        <div id="cart-items" class="scanner-result mb-6">
+                            <div class="text-center py-8 text-gray-500">
+                                <i class="fas fa-shopping-cart text-4xl mb-3 text-gray-300"></i>
+                                <p>Your cart is empty</p>
+                                <p class="text-sm mt-2">Scan products to add them to your cart</p>
+                            </div>
+                        </div>
+                        <div class="border-t pt-4">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-600">Subtotal</span>
+                                <span id="subtotal" class="font-semibold">$0.00</span>
+                            </div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-600">Tax (10%)</span>
+                                <span id="tax" class="font-semibold">$0.00</span>
+                            </div>
+                            <div class="flex justify-between mb-4 pt-2 border-t">
+                                <span class="text-gray-800 font-bold">Total</span>
+                                <span id="total" class="font-bold text-indigo-600">$0.00</span>
+                            </div>
+                            <a href="#checkout" class="btn-primary w-full py-3 text-center rounded-md font-semibold block">
+                                Proceed to Checkout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">Smart Features</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Our smart trolley system combines cutting-edge technologies to make your shopping experience seamless.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="feature-card bg-white rounded-lg shadow-md p-6">
+                    <div class="w-12 h-12 rounded-full gradient-bg flex items-center justify-center mb-4">
+                        <i class="fas fa-qrcode text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Instant Barcode Scanning</h3>
+                    <p class="text-gray-600">Use your smartphone camera to scan product barcodes and instantly add items to your virtual cart.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="feature-card bg-white rounded-lg shadow-md p-6">
+                    <div class="w-12 h-12 rounded-full gradient-bg flex items-center justify-center mb-4">
+                        <i class="fas fa-balance-scale text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Weight Verification</h3>
+                    <p class="text-gray-600">Smart trolleys equipped with load cells verify that the items in your cart match what you've scanned.</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="feature-card bg-white rounded-lg shadow-md p-6">
+                    <div class="w-12 h-12 rounded-full gradient-bg flex items-center justify-center mb-4">
+                        <i class="fas fa-credit-card text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Digital Checkout</h3>
+                    <p class="text-gray-600">Skip the lines and complete your purchase directly through the app with various payment options.</p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="feature-card bg-white rounded-lg shadow-md p-6">
+                    <div class="w-12 h-12 rounded-full gradient-bg flex items-center justify-center mb-4">
+                        <i class="fas fa-robot text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">AI Product Recognition</h3>
+                    <p class="text-gray-600">Our AI technology recognizes products even when barcodes are damaged, ensuring a smooth shopping experience.</p>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="feature-card bg-white rounded-lg shadow-md p-6">
+                    <div class="w-12 h-12 rounded-full gradient-bg flex items-center justify-center mb-4">
+                        <i class="fas fa-history text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Real-Time Updates</h3>
+                    <p class="text-gray-600">See your bill update instantly as you add items, helping you stay within budget while shopping.</p>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="feature-card bg-white rounded-lg shadow-md p-6">
+                    <div class="w-12 h-12 rounded-full gradient-bg flex items-center justify-center mb-4">
+                        <i class="fas fa-store text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Store Integration</h3>
+                    <p class="text-gray-600">Seamlessly integrates with existing store inventory and pricing systems for accurate information.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Integration Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h2 class="text-3xl font-bold mb-6">AI-Powered Shopping Experience</h2>
+                    <p class="text-gray-600 mb-6">Our smart trolley system leverages artificial intelligence to create a frictionless shopping experience:</p>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <div class="flex-shrink-0 w-6 h-6 rounded-full gradient-bg flex items-center justify-center mt-1">
+                                <i class="fas fa-check text-white text-xs"></i>
+                            </div>
+                            <div class="ml-3">
+                                <h4 class="text-lg font-semibold">Advanced Product Recognition</h4>
+                                <p class="text-gray-600">AI algorithms identify products even with partially visible or damaged barcodes.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="flex-shrink-0 w-6 h-6 rounded-full gradient-bg flex items-center justify-center mt-1">
+                                <i class="fas fa-check text-white text-xs"></i>
+                            </div>
+                            <div class="ml-3">
+                                <h4 class="text-lg font-semibold">Smart Fraud Prevention</h4>
+                                <p class="text-gray-600">Weight verification system uses AI to detect discrepancies between scanned items and cart contents.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="flex-shrink-0 w-6 h-6 rounded-full gradient-bg flex items-center justify-center mt-1">
+                                <i class="fas fa-check text-white text-xs"></i>
+                            </div>
+                            <div class="ml-3">
+                                <h4 class="text-lg font-semibold">Personalized Recommendations</h4>
+                                <p class="text-gray-600">AI analyzes your shopping patterns to suggest relevant products you might be interested in.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="card-gradient rounded-lg p-8 shadow-lg max-w-md">
+                        <div class="mb-6">
+                            <div class="w-16 h-16 rounded-full gradient-bg flex items-center justify-center mb-4 mx-auto">
+                                <i class="fas fa-brain text-white text-2xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-center text-indigo-600 mb-2">AI Processing</h3>
+                            <div class="loading-bar mb-2"></div>
+                            <p class="text-center text-gray-600 text-sm">Analyzing shopping patterns and optimizing experience</p>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="bg-white rounded-lg p-4 shadow-sm">
+                                <div class="flex items-center">
+                                    <div class="w-10 h-10 rounded-full gradient-bg flex items-center justify-center">
+                                        <i class="fas fa-apple-alt text-white"></i>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h4 class="font-semibold">Product Recognition</h4>
+                                        <div class="flex items-center">
+                                            <div class="h-2 w-24 bg-gray-200 rounded-full mr-2">
+                                                <div class="h-2 w-20 gradient-bg rounded-full"></div>
+                                            </div>
+                                            <span class="text-xs text-gray-600">85%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-lg p-4 shadow-sm">
+                                <div class="flex items-center">
+                                    <div class="w-10 h-10 rounded-full gradient-bg flex items-center justify-center">
+                                        <i class="fas fa-weight text-white"></i>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h4 class="font-semibold">Weight Verification</h4>
+                                        <div class="flex items-center">
+                                            <div class="h-2 w-24 bg-gray-200 rounded-full mr-2">
+                                                <div class="h-2 w-22 gradient-bg rounded-full"></div>
+                                            </div>
+                                            <span class="text-xs text-gray-600">92%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-lg p-4 shadow-sm">
+                                <div class="flex items-center">
+                                    <div class="w-10 h-10 rounded-full gradient-bg flex items-center justify-center">
+                                        <i class="fas fa-user-circle text-white"></i>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h4 class="font-semibold">User Preference Learning</h4>
+                                        <div class="flex items-center">
+                                            <div class="h-2 w-24 bg-gray-200 rounded-full mr-2">
+                                                <div class="h-2 w-18 gradient-bg rounded-full"></div>
+                                            </div>
+                                            <span class="text-xs text-gray-600">78%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Checkout Section -->
+    <section id="checkout" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">Digital Checkout</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Complete your shopping quickly and securely with our digital checkout process.</p>
+            </div>
+
+            <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="flex flex-col md:flex-row">
+                    <div class="md:w-1/2 p-6 md:p-8">
+                        <h3 class="text-xl font-semibold mb-6">Payment Details</h3>
+                        <form class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Card Number</label>
+                                <input type="text" placeholder="1234 5678 9012 3456" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            </div>
+                            <div class="flex gap-4">
+                                <div class="flex-1">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Expiry Date</label>
+                                    <input type="text" placeholder="MM/YY" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                </div>
+                                <div class="flex-1">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">CVC</label>
+                                    <input type="text" placeholder="123" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Cardholder Name</label>
+                                <input type="text" placeholder="John Smith" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            </div>
+                            <div class="pt-2">
+                                <button type="button" id="complete-checkout" class="btn-primary w-full py-3 rounded-md font-semibold">Complete Checkout</button>
+                            </div>
+                        </form>
+                        <div class="mt-6 flex items-center justify-center space-x-4">
+                            <span class="text-gray-500 text-sm">Other payment methods:</span>
+                            <i class="fab fa-paypal text-blue-600 text-xl"></i>
+                            <i class="fab fa-apple-pay text-black text-xl"></i>
+                            <i class="fab fa-google-pay text-gray-700 text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 bg-gray-50 p-6 md:p-8">
+                        <h3 class="text-xl font-semibold mb-6">Order Summary</h3>
+                        <div id="checkout-items" class="space-y-4 mb-6">
+                            <div class="text-center py-6 text-gray-500">
+                                <p>No items in cart</p>
+                                <p class="text-sm mt-2">Go to scanner to add items</p>
+                            </div>
+                        </div>
+                        <div class="border-t pt-4">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-600">Subtotal</span>
+                                <span id="checkout-subtotal" class="font-semibold">$0.00</span>
+                            </div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-600">Tax (10%)</span>
+                                <span id="checkout-tax" class="font-semibold">$0.00</span>
+                            </div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-600">Shipping</span>
+                                <span class="font-semibold">$0.00</span>
+                            </div>
+                            <div class="flex justify-between mb-4 pt-2 border-t">
+                                <span class="text-gray-800 font-bold">Total</span>
+                                <span id="checkout-total" class="font-bold text-indigo-600">$0.00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="gradient-bg text-white py-10">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between mb-8">
+                <div class="mb-6 md:mb-0">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i class="fas fa-shopping-cart text-white text-2xl"></i>
+                        <span class="font-bold text-xl">SmartTrolley</span>
+                    </div>
+                    <p class="text-indigo-100 max-w-xs">Revolutionizing the shopping experience with smart technology and AI-powered checkout solutions.</p>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+                    <div>
+                        <h4 class="font-semibold mb-4">Product</h4>
+                        <ul class="space-y-2 text-indigo-100">
+                            <li><a href="#" class="hover:text-white">Features</a></li>
+                            <li><a href="#" class="hover:text-white">Pricing</a></li>
+                            <li><a href="#" class="hover:text-white">Demo</a></li>
+                            <li><a href="#" class="hover:text-white">Integrations</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold mb-4">Support</h4>
+                        <ul class="space-y-2 text-indigo-100">
+                            <li><a href="#" class="hover:text-white">Help Center</a></li>
+                            <li><a href="#" class="hover:text-white">Documentation</a></li>
+                            <li><a href="#" class="hover:text-white">API Reference</a></li>
+                            <li><a href="#" class="hover:text-white">Contact Us</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold mb-4">Company</h4>
+                        <ul class="space-y-2 text-indigo-100">
+                            <li><a href="#" class="hover:text-white">About</a></li>
+                            <li><a href="#" class="hover:text-white">Blog</a></li>
+                            <li><a href="#" class="hover:text-white">Careers</a></li>
+                            <li><a href="#" class="hover:text-white">Press</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-indigo-400 pt-6 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-indigo-100 mb-4 md:mb-0">© 2023 SmartTrolley. All rights reserved.</p>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-indigo-100 hover:text-white">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="text-indigo-100 hover:text-white">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="text-indigo-100 hover:text-white">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="text-indigo-100 hover:text-white">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Success Modal -->
+    <div id="success-modal" class="fixed inset-0 flex items-center justify-center z-50 hidden">
+        <div class="absolute inset-0 bg-black opacity-50"></div>
+        <div class="bg-white rounded-lg p-8 max-w-md z-10 relative">
+            <button id="close-modal" class="absolute top-3 right-3 text-gray-400 hover:text-gray-600">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="text-center">
+                <div class="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-check text-green-600 text-2xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-800 mb-2">Checkout Complete!</h3>
+                <p class="text-gray-600 mb-6">Your order has been successfully processed. Thank you for shopping with us!</p>
+                <button id="continue-shopping" class="btn-primary px-6 py-3 rounded-md font-semibold">Continue Shopping</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample product database
+        const productDatabase = {
+            "123456789012": { id: "123456789012", name: "Organic Apple", price: 1.99, weight: 0.2, image: "https://cdn.jsdelivr.net/gh/Leoche/uikit-elements/src/images/food/apple-1.png" },
+            "223456789012": { id: "223456789012", name: "Whole Grain Bread", price: 3.49, weight: 0.5, image: "https://cdn.jsdelivr.net/gh/Leoche/uikit-elements/src/images/food/bread-1.png" },
+            "323456789012": { id: "323456789012", name: "Organic Milk", price: 4.29, weight: 1.0, image: "https://cdn.jsdelivr.net/gh/Leoche/uikit-elements/src/images/food/milk-1.png" },
+            "423456789012": { id: "423456789012", name: "Cheddar Cheese", price: 5.99, weight: 0.3, image: "https://cdn.jsdelivr.net/gh/Leoche/uikit-elements/src/images/food/cheese-1.png" },
+            "523456789012": { id: "523456789012", name: "Free Range Eggs", price: 3.99, weight: 0.4, image: "https://cdn.jsdelivr.net/gh/Leoche/uikit-elements/src/images/food/eggs-1.png" },
+            "623456789012": { id: "623456789012", name: "Avocado", price: 2.49, weight: 0.2, image: "https://cdn.jsdelivr.net/gh/Leoche/uikit-elements/src/images/food/avocado-1.png" },
+            "723456789012": { id: "723456789012", name: "Chicken Breast", price: 8.99, weight: 0.5, image: "https://cdn.jsdelivr.net/gh/Leoche/uikit-elements/src/images/food/chicken-1.png" },
+            "823456789012": { id: "823456789012", name: "Chocolate Bar", price: 2.99, weight: 0.1, image: "https://cdn.jsdelivr.net/gh/Leoche/uikit-elements/src/images/food/chocolate-1.png" },
+            "923456789012": { id: "923456789012", name: "Potato Chips", price: 3.29, weight: 0.15, image: "https://cdn.jsdelivr.net/gh/Leoche/uikit-elements/src/images/food/chips-1.png" },
+            "023456789012": { id: "023456789012", name: "Orange Juice", price: 4.49, weight: 1.0, image: "https://cdn.jsdelivr.net/gh/Leoche/uikit-elements/src/images/food/juice-1.png" }
+        };
+
+        // Cart state
+        let cart = [];
+        let html5QrCode;
+        let isScanning = false;
+
+        // DOM Elements
+        const startButton = document.getElementById('startButton');
+        const cartItems = document.getElementById('cart-items');
+        const cartCount = document.getElementById('cart-count');
+        const subtotalElement = document.getElementById('subtotal');
+        const taxElement = document.getElementById('tax');
+        const totalElement = document.getElementById('total');
+        const checkoutItems = document.getElementById('checkout-items');
+        const checkoutSubtotal = document.getElementById('checkout-subtotal');
+        const checkoutTax = document.getElementById('checkout-tax');
+        const checkoutTotal = document.getElementById('checkout-total');
+        const expectedWeightElement = document.getElementById('expected-weight');
+        const actualWeightElement = document.getElementById('actual-weight');
+        const weightBar = document.getElementById('weight-bar');
+        const weightStatus = document.getElementById('weight-status');
+        const completeCheckoutButton = document.getElementById('complete-checkout');
+        const successModal = document.getElementById('success-modal');
+        const closeModalButton = document.getElementById('close-modal');
+        const continueShoppingButton = document.getElementById('continue-shopping');
+
+        // Initialize scanner
+        function initScanner() {
+            html5QrCode = new Html5Qrcode("reader");
+            
+            startButton.addEventListener('click', () => {
+                if (isScanning) {
+                    stopScanner();
+                } else {
+                    startScanner();
+                }
+            });
+        }
+
+        // Start the scanner
+        function startScanner() {
+            const qrConfig = { fps: 10, qrbox: { width: 250, height: 150 } };
+            
+            html5QrCode.start(
+                { facingMode: "environment" },
+                qrConfig,
+                onScanSuccess,
+                onScanFailure
+            ).then(() => {
+                isScanning = true;
+                startButton.innerHTML = 'Stop Scanner';
+                startButton.classList.add('bg-red-600');
+                startButton.classList.remove('btn-primary');
+            }).catch((err) => {
+                console.error('Error starting scanner:', err);
+                alert('Could not start scanner. Please ensure camera permissions are granted.');
+            });
+        }
+
+        // Stop the scanner
+        function stopScanner() {
+            html5QrCode.stop().then(() => {
+                isScanning = false;
+                startButton.innerHTML = 'Start Scanner';
+                startButton.classList.remove('bg-red-600');
+                startButton.classList.add('btn-primary');
+            }).catch((err) => {
+                console.error('Error stopping scanner:', err);
+            });
+        }
+
+        // On successful scan
+        function onScanSuccess(decodedText, decodedResult) {
+            // Check if the barcode exists in our database
+            if (productDatabase[decodedText]) {
+                const product = productDatabase[decodedText];
+                
+                // Check if product is already in cart, if so increment quantity
+                const existingItemIndex = cart.findIndex(item => item.id === product.id);
+                
+                if (existingItemIndex !== -1) {
+                    cart[existingItemIndex].quantity += 1;
+                } else {
+                    cart.push({
+                        id: product.id,
+                        name: product.name,
+                        price: product.price,
+                        weight: product.weight,
+                        image: product.image,
+                        quantity: 1
+                    });
+                }
+                
+                // Update UI
+                updateCartUI();
+                updateTrolleyWeight();
+                
+                // Provide feedback
+                playSuccessSound();
+                showProductAddedNotification(product.name);
+            } else {
+                // Handle unknown product
+                console.log("Unknown product barcode:", decodedText);
+                playErrorSound();
+                showNotification("Unknown product", "This product is not in our database.");
+            }
+        }
+
+        // On scan failure
+        function onScanFailure(error) {
+            // Handle scan failures or errors
+            // console.log('Scan error:', error);
+        }
+
+        // Update cart UI
+        function updateCartUI() {
+            if (cart.length === 0) {
+                cartItems.innerHTML = `
+                    <div class="text-center py-8 text-gray-500">
+                        <i class="fas fa-shopping-cart text-4xl mb-3 text-gray-300"></i>
+                        <p>Your cart is empty</p>
+                        <p class="text-sm mt-2">Scan products to add them to your cart</p>
+                    </div>
+                `;
+                checkoutItems.innerHTML = `
+                    <div class="text-center py-6 text-gray-500">
+                        <p>No items in cart</p>
+                        <p class="text-sm mt-2">Go to scanner to add items</p>
+                    </div>
+                `;
+            } else {
+                // Update cart items
+                cartItems.innerHTML = cart.map(item => `
+                    <div class="product-item flex items-center p-3 mb-3">
+                        <img src="${item.image}" alt="${item.name}" class="w-12 h-12 object-cover rounded-md mr-4">
+                        <div class="flex-1">
+                            <h4 class="font-semibold">${item.name}</h4>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-500">$${item.price.toFixed(2)} × ${item.quantity}</span>
+                                <span class="font-semibold">$${(item.price * item.quantity).toFixed(2)}</span>
+                            </div>
+                        </div>
+                        <button class="remove-item ml-2 text-gray-400 hover:text-red-500" data-id="${item.id}">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                `).join('');
+
+                // Update checkout items
+                checkoutItems.innerHTML = cart.map(item => `
+                    <div class="flex justify-between items-center mb-3">
+                        <div class="flex items-center">
+                            <img src="${item.image}" alt="${item.name}" class="w-10 h-10 object-cover rounded-md mr-3">
+                            <div>
+                                <h4 class="font-semibold text-sm">${item.name}</h4>
+                                <span class="text-xs text-gray-500">$${item.price.toFixed(2)} × ${item.quantity}</span>
+                            </div>
+                        </div>
+                        <span class="font-semibold">$${(item.price * item.quantity).toFixed(2)}</span>
+                    </div>
+                `).join('');
+
+                // Add event listeners to remove buttons
+                document.querySelectorAll('.remove-item').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const id = e.currentTarget.dataset.id;
+                        removeFromCart(id);
+                    });
+                });
+            }
+
+            // Update counts and totals
+            updateTotals();
+        }
+
+        // Remove item from cart
+        function removeFromCart(id) {
+            const itemIndex = cart.findIndex(item => item.id === id);
+            
+            if (itemIndex !== -1) {
+                if (cart[itemIndex].quantity > 1) {
+                    cart[itemIndex].quantity -= 1;
+                } else {
+                    cart.splice(itemIndex, 1);
+                }
+                
+                updateCartUI();
+                updateTrolleyWeight();
+            }
+        }
+
+        // Update totals
+        function updateTotals() {
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const tax = subtotal * 0.1; // 10% tax
+            const total = subtotal + tax;
+            
+            subtotalElement.textContent = `$${subtotal.toFixed(2)}`;
+            taxElement.textContent = `$${tax.toFixed(2)}`;
+            totalElement.textContent = `$${total.toFixed(2)}`;
+            
+            checkoutSubtotal.textContent = `$${subtotal.toFixed(2)}`;
+            checkoutTax.textContent = `$${tax.toFixed(2)}`;
+            checkoutTotal.textContent = `$${total.toFixed(2)}`;
+        }
+
+        // Update trolley weight
+        function updateTrolleyWeight() {
+            const expectedWeight = cart.reduce((sum, item) => sum + (item.weight * item.quantity), 0);
+            // Simulate a small difference for demonstration purposes
+            const randomVariation = (Math.random() * 0.2) - 0.1; // Between -0.1 and 0.1
+            const actualWeight = expectedWeight + randomVariation;
+            
+            expectedWeightElement.textContent = `${expectedWeight.toFixed(2)} kg`;
+            actualWeightElement.textContent = `${actualWeight.toFixed(2)} kg`;
+            
+            // Update weight bar
+            const percentage = Math.min(100, (actualWeight / expectedWeight) * 100);
+            weightBar.style.width = `${percentage}%`;
+            
+            // Update status
+            const weightDifference = Math.abs(expectedWeight - actualWeight);
+            
+            if (weightDifference > 0.3) {
+                // Significant weight difference
+                weightStatus.className = 'text-sm font-medium text-red-600';
+                weightStatus.innerHTML = '<i class="fas fa-exclamation-circle mr-1"></i> Weight mismatch';
+                weightBar.style.background = 'linear-gradient(90deg, #EF4444 0%, #F87171 100%)';
+            } else if (weightDifference > 0.1) {
+                // Small weight difference
+                weightStatus.className = 'text-sm font-medium text-yellow-600';
+                weightStatus.innerHTML = '<i class="fas fa-exclamation-triangle mr-1"></i> Weight difference detected';
+                weightBar.style.background = 'linear-gradient(90deg, #F59E0B 0%, #FBBF24 100%)';
+            } else {
+                // Weight ok
+                weightStatus.className = 'text-sm font-medium text-green-600';
+                weightStatus.innerHTML = '<i class="fas fa-check-circle mr-1"></i> Weight verified';
+                weightBar.style.background = 'linear-gradient(90deg, #10B981 0%, #059669 100%)';
+            }
+        }
+
+        // Play success sound
+        function playSuccessSound() {
+            // You could create an Audio object here and play a beep
+            // For simplicity, we're just logging to console
+            console.log("Success beep");
+        }
+
+        // Play error sound
+        function playErrorSound() {
+            console.log("Error beep");
+        }
+
+        // Show notification for product added
+        function showProductAddedNotification(productName) {
+            // This could be improved with a proper toast notification component
+            console.log(`Added ${productName} to cart`);
+        }
+
+        // Show notification
+        function showNotification(title, message) {
+            console.log(`${title}: ${message}`);
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            initScanner();
+            updateCartUI();
+            
+            // Event listener for checkout button
+            completeCheckoutButton.addEventListener('click', () => {
+                if (cart.length > 0) {
+                    successModal.classList.remove('hidden');
+                } else {
+                    alert('Please add items to your cart before checkout.');
+                }
+            });
+            
+            // Event listeners for modal
+            closeModalButton.addEventListener('click', () => {
+                successModal.classList.add('hidden');
+            });
+            
+            continueShoppingButton.addEventListener('click', () => {
+                successModal.classList.add('hidden');
+                cart = [];
+                updateCartUI();
+                updateTrolleyWeight();
+            });
+            
+            // Add a sample product to the cart for demonstration
+            setTimeout(() => {
+                // Uncomment this to automatically add a sample product
+                // onScanSuccess("123456789012");
+            }, 2000);
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
