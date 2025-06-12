@@ -14,8 +14,28 @@
     <script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 </head>
 
-<body>
+<body style="background:#f8fafc">
     <header class="head">
+        <nav class="navbar">
+            <div class="logo" style="display: flex; align-items: center; gap: 8px;">
+                <span style="color: #06b6d4; font-size: 1.7rem; display: flex; align-items: center;">
+                    <i class="fas fa-shopping-cart"></i>
+                </span>
+                <span style="font-weight: 700; font-size: 1.3rem; letter-spacing: 1px; color: #111;">Smart<span style="color:#06b6d4;">Cart</span></span>
+            </div>
+            <div class="hamburger" onclick="toggleMenu()">☰</div>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#benefits">Benefits</a></li>
+                <li><a href="#ai-integration">AI Integration</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#scanner">Scanner</a></li>
+                <li><a href="#checkout">Checkout</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <a href="#scanner" class="btn getstart navbar-getstart" style="margin-left: 24px; min-width: 120px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 1rem; font-weight: 600; border-radius: 8px; background: linear-gradient(90deg, #06b6d4 0%, #38bdf8 100%); color: #fff; text-decoration: none; transition: background 0.2s;">Get Started</a>
+        </nav>
+
         <div class="head top-0">
             <nav class="nav">
                 <div class="smartcartdiv">
@@ -37,6 +57,7 @@
                 </div>
             </nav>
         </div>
+
     </header>
     <!-- Uppersection (the future of supermarket) -->
     <!-- Enhanced Hero Section Layout -->
@@ -166,18 +187,31 @@
                 <h2 class="revolutionary-f">How <span class="gradient-text">SmartCart</span> Works</h2>
                 <p class="para-feature">A seamless shopping experience from start to finish</p>
             </div>
+
+            <div class="hiw-flex-row" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 48px; margin-top: 32px;">
+                <div class="how-it-works-grid" style="flex: 1 1 340px; min-width: 280px; max-width: 540px; color: #111; padding: 32px 28px; border-radius: 18px; background: none;">
+                    <div class="hiw-box" style="background: #f8fafc; border-radius: 12px; padding: 18px 16px; margin-bottom: 18px;">
+
             <div class="hiw-both">
                 <div class="how-it-works-grid">
                     <div class="hiw-box">
+
                         <div class="hiw-both">
                             <span class="bulletno">1</span>
                             <h2 class="hiw-h2">Grab a Smart Trolley</h2>
                         </div>
+
+                        <p class="hiw-para">Select any trolley from the entrance. Each cart is equipped with load cells at
+                            the base for weight verification and a smartphone mount on the handle.</p>
+                    </div>
+                    <div class="hiw-box" style="background: #f8fafc; border-radius: 12px; padding: 18px 16px; margin-bottom: 18px;">
+
                         <p class="hiw-para">Select any trolley from the entrance. Each cart is equipped with load cells
                             at
                             the base for weight verification and a smartphone mount on the handle.</p>
                     </div>
                     <div class="hiw-box">
+
                         <div class="hiw-both">
                             <span class="bulletno">2</span>
                             <h2 class="hiw-h2">Scan & Shop</h2>
@@ -185,20 +219,39 @@
                         <p class="hiw-para">Use your smartphone to scan product barcodes before placing them in the
                             trolley. The app identifies each product instantly, showing details and price.</p>
                     </div>
+
+                    <div class="hiw-box" style="background: #f8fafc; border-radius: 12px; padding: 18px 16px; margin-bottom: 18px;">
+
                     <div class="hiw-box">
+
                         <div class="hiw-both">
                             <span class="bulletno">3</span>
                             <h2 class="hiw-h2">Weight Verification</h2>
                         </div>
+
+                        <p class="hiw-para">The smart trolley's load cells automatically verify the weight of added items,
+                            comparing it to the expected weight to ensure accuracy.</p>
+                    </div>
+                    <div class="hiw-box" style="background: #f8fafc; border-radius: 12px; padding: 18px 16px; margin-bottom: 0;">
+
                         <p class="hiw-para">The smart trolley's load cells automatically verify the weight of added
                             items,
                             comparing it to the expected weight to ensure accuracy.</p>
                     </div>
                     <div class="hiw-box">
+
                         <div class="hiw-both">
                             <span class="bulletno">4</span>
                             <h2 class="hiw-h2">Digital Checkout</h2>
                         </div>
+
+                        <p class="hiw-para">When you're done shopping, complete your purchase through the app. Payment is
+                            processed digitally, and your receipt is sent instantly to your smartphone.</p>
+                    </div>
+                </div>
+                <div class="hiw-div-img" style="flex: 1 1 340px; display: flex; justify-content: center; align-items: center; min-width: 280px; height: 100%;">
+                    <img src="cfimages (2).avif" class="hiw-img" alt="SmartCart demo" style="width: 100%; max-width: 520px; height: 100%; object-fit: cover; border-radius: 16px; margin: 0;" />
+
                         <p class="hiw-para">When you're done shopping, complete your purchase through the app. Payment
                             is
                             processed digitally, and your receipt is sent instantly to your smartphone.</p>
@@ -206,6 +259,7 @@
                 </div>
                 <div class="hiw-div-img">
                     <img src="cfimages (2).avif" class="hiw-img" alt="">
+
                 </div>
             </div>
         </div>
@@ -214,6 +268,118 @@
 
     <!-- Benefits Section -->
     <section id="benefits">
+
+        <div class="benefits-header" style="display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 0;">
+          <h2 class="revolutionary-f" style="margin-bottom: 12px;">Why Choose <span class="gradient-text">Smart Billing?</span></h2>
+          <p class="para-feature" style="margin-bottom: 32px;">Discover the key advantages that set our smart billing solution apart from the competition.</p>
+        </div>
+        <div class="benefits-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; justify-content: center; align-content: center; margin: 0 auto; width: 100%; max-width: 1240px;">
+          <!-- Cost Savings -->
+          <div class="benefit-card" style="min-height: 240px; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; background: #fff; border-radius: 10px; box-shadow: 0 8px 24px 0 rgba(16,30,54,0.08); padding: 22px 18px 18px 18px; margin: 0; box-sizing: border-box;">
+            <span class="benefit-icon" aria-label="Cost Savings" style="font-size: 2.1rem; display: flex; align-items: center; justify-content: center; margin-bottom: 14px;">💸</span>
+            <h3 class="feature-heading" style="font-size: 22px; font-weight: 700; margin-bottom: 10px; margin-top: 0;">Cost Savings</h3>
+            <p class="feature-para" style="font-size: 18px; color: #334155; line-height: 1.5; margin: 0;">Reduce operational expenses with automated billing, error-free invoicing, and transparent pricing—maximizing your bottom line.</p>
+          </div>
+          <!-- Efficiency & Automation -->
+          <div class="benefit-card" style="min-height: 240px; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; background: #fff; border-radius: 10px; box-shadow: 0 8px 24px 0 rgba(16,30,54,0.08); padding: 22px 18px 18px 18px; margin: 0; box-sizing: border-box;">
+            <span class="benefit-icon" aria-label="Automation" style="font-size: 2.1rem; display: flex; align-items: center; justify-content: center; margin-bottom: 14px;">⚡</span>
+            <h3 class="feature-heading" style="font-size: 22px; font-weight: 700; margin-bottom: 10px; margin-top: 0;">Efficiency & Automation</h3>
+            <p class="feature-para" style="font-size: 18px; color: #334155; line-height: 1.5; margin: 0;">Streamline your workflow with real-time billing, instant invoice generation, and seamless payment processing—saving you hours every week.</p>
+          </div>
+          <!-- User Experience -->
+          <div class="benefit-card" style="min-height: 240px; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; background: #fff; border-radius: 10px; box-shadow: 0 8px 24px 0 rgba(16,30,54,0.08); padding: 22px 18px 18px 18px; margin: 0; box-sizing: border-box;">
+            <span class="benefit-icon" aria-label="User Experience" style="font-size: 2.1rem; display: flex; align-items: center; justify-content: center; margin-bottom: 14px;">📱</span>
+            <h3 class="feature-heading" style="font-size: 22px; font-weight: 700; margin-bottom: 10px; margin-top: 0;">Intuitive User Experience</h3>
+            <p class="feature-para" style="font-size: 18px; color: #334155; line-height: 1.5; margin: 0;">Enjoy a modern, mobile-friendly interface designed for simplicity, making billing effortless for both staff and customers.</p>
+          </div>
+          <!-- Security & Compliance -->
+          <div class="benefit-card" style="min-height: 240px; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; background: #fff; border-radius: 10px; box-shadow: 0 8px 24px 0 rgba(16,30,54,0.08); padding: 22px 18px 18px 18px; margin: 0; box-sizing: border-box;">
+            <span class="benefit-icon" aria-label="Security" style="font-size: 2.1rem; display: flex; align-items: center; justify-content: center; margin-bottom: 14px;">🔒</span>
+            <h3 class="feature-heading" style="font-size: 22px; font-weight: 700; margin-bottom: 10px; margin-top: 0;">Security & Compliance</h3>
+            <p class="feature-para" style="font-size: 18px; color: #334155; line-height: 1.5; margin: 0;">Protect sensitive data with advanced encryption, secure payment gateways, and compliance with industry standards.</p>
+          </div>
+          <!-- Customer Support -->
+          <div class="benefit-card" style="min-height: 240px; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; background: #fff; border-radius: 10px; box-shadow: 0 8px 24px 0 rgba(16,30,54,0.08); padding: 22px 18px 18px 18px; margin: 0; box-sizing: border-box;">
+            <span class="benefit-icon" aria-label="Support" style="font-size: 2.1rem; display: flex; align-items: center; justify-content: center; margin-bottom: 14px;">🤝</span>
+            <h3 class="feature-heading" style="font-size: 22px; font-weight: 700; margin-bottom: 10px; margin-top: 0;">24/7 Customer Support</h3>
+            <p class="feature-para" style="font-size: 18px; color: #334155; line-height: 1.5; margin: 0;">Get expert assistance whenever you need it, with dedicated support channels and comprehensive help resources.</p>
+          </div>
+          <!-- Seamless Integration -->
+          <div class="benefit-card" style="min-height: 240px; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; background: #fff; border-radius: 10px; box-shadow: 0 8px 24px 0 rgba(16,30,54,0.08); padding: 22px 18px 18px 18px; margin: 0; box-sizing: border-box;">
+            <span class="benefit-icon" aria-label="Integration" style="font-size: 2.1rem; display: flex; align-items: center; justify-content: center; margin-bottom: 14px;">🔗</span>
+            <h3 class="feature-heading" style="font-size: 22px; font-weight: 700; margin-bottom: 10px; margin-top: 0;">Seamless Integration</h3>
+            <p class="feature-para" style="font-size: 18px; color: #334155; line-height: 1.5; margin: 0;">Easily connect Smart Billing with your existing POS, inventory, and accounting systems for a unified workflow.</p>
+          </div>
+        </div>
+        <!-- Testimonials -->
+        <!-- <div class="benefits-testimonials" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+        <blockquote style="max-width: 600px; margin: 0 auto 1.5rem auto;">
+          “Smart Billing transformed our checkout process—customers love the speed, and we love the accuracy!”<br>
+          <span class="testimonial-author">— Ms.Surabhi Nikam., Store Manager</span>
+        </blockquote>
+        <blockquote style="max-width: 600px; margin: 0 auto 1.5rem auto;">
+          “The automation features saved us countless hours each month. Highly recommended!”<br>
+          <span class="testimonial-author">— Mr.Nishant Ninawe., Business Owner</span>
+        </blockquote>
+      </div> -->
+
+    <!-- AI Integration Section -->
+    <section id="ai-integration" class="Feature" style="margin-top:50px;">
+        <h2 class="revolutionary-f" style="text-align: center; margin-bottom: 12px;">AI Integration <span class="gradient-text">for Smart Billing</span></h2>
+        <p class="para-feature" style="max-width:600px; margin: 0 auto 32px auto; text-align: center;">Discover how AI-powered features can revolutionize your billing process, enhance customer experience, and drive business growth.</p>
+        <div class="ai-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; justify-content: center; align-content: center; margin: 0 auto; width: 100%; max-width: 1240px;">
+          <div class="box" style="min-height: 240px; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; background: #fff; border-radius: 10px; box-shadow: 0 8px 24px 0 rgba(16,30,54,0.08); padding: 22px 18px 18px 18px; margin: 0; box-sizing: border-box;">
+            <img src="CustomerInsights.png" alt="Customer Insights" class="feature-img" style="height: 60px; width: 62px; margin-bottom: 14px; object-fit: contain;">
+            <h3 class="feature-heading" style="font-size: 22px; font-weight: 700; margin-bottom: 10px; margin-top: 0;">Customer Insights</h3>
+            <p class="feature-para" style="font-size: 18px; color: #334155; line-height: 1.5; margin: 0;">Leverage AI to analyze purchase patterns, predict customer needs, and personalize offers for higher engagement.</p>
+          </div>
+          <div class="box" style="min-height: 240px; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; background: #fff; border-radius: 10px; box-shadow: 0 8px 24px 0 rgba(16,30,54,0.08); padding: 22px 18px 18px 18px; margin: 0; box-sizing: border-box;">
+            <img src="Fraud prevention.png" alt="Fraud Prevention" class="feature-img" style="height: 60px; width: 62px; margin-bottom: 14px; object-fit: contain;">
+            <h3 class="feature-heading" style="font-size: 22px; font-weight: 700; margin-bottom: 10px; margin-top: 0;">Fraud Detection</h3>
+            <p class="feature-para" style="font-size: 18px; color: #334155; line-height: 1.5; margin: 0;">AI algorithms monitor transactions in real-time to detect and prevent fraudulent activities, ensuring secure billing.</p>
+          </div>
+          <div class="box" style="min-height: 240px; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; background: #fff; border-radius: 10px; box-shadow: 0 8px 24px 0 rgba(16,30,54,0.08); padding: 22px 18px 18px 18px; margin: 0; box-sizing: border-box;">
+            <img src="VirtualCartManagement.png" alt="Virtual Cart" class="feature-img" style="height: 60px; width: 62px; margin-bottom: 14px; object-fit: contain;">
+            <h3 class="feature-heading" style="font-size: 22px; font-weight: 700; margin-bottom: 10px; margin-top: 0;">Virtual Cart Management</h3>
+            <p class="feature-para" style="font-size: 18px; color: #334155; line-height: 1.5; margin: 0;">AI streamlines cart management, automates item recognition, and reduces checkout time for a seamless experience.</p>
+          </div>
+          <div class="box" style="min-height: 240px; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; background: #fff; border-radius: 10px; box-shadow: 0 8px 24px 0 rgba(16,30,54,0.08); padding: 22px 18px 18px 18px; margin: 0; box-sizing: border-box;">
+            <img src="Smarttrolleywithloadcells.png" alt="Smart Trolley" class="feature-img" style="height: 60px; width: 62px; margin-bottom: 14px; object-fit: contain;">
+            <h3 class="feature-heading" style="font-size: 22px; font-weight: 700; margin-bottom: 10px; margin-top: 0;">Smart Trolley Integration</h3>
+            <p class="feature-para" style="font-size: 18px; color: #334155; line-height: 1.5; margin: 0;">Integrate AI with smart trolleys to automatically track items, calculate totals, and provide instant billing.</p>
+          </div>
+          <div class="box" style="min-height: 240px; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; background: #fff; border-radius: 10px; box-shadow: 0 8px 24px 0 rgba(16,30,54,0.08); padding: 22px 18px 18px 18px; margin: 0; box-sizing: border-box;">
+            <img src="Digital Checkout.png" alt="Digital Checkout" class="feature-img" style="height: 60px; width: 62px; margin-bottom: 14px; object-fit: contain;">
+            <h3 class="feature-heading" style="font-size: 22px; font-weight: 700; margin-bottom: 10px; margin-top: 0;">AI-Powered Digital Checkout</h3>
+            <p class="feature-para" style="font-size: 18px; color: #334155; line-height: 1.5; margin: 0;">Enable fast, contactless checkout with AI-driven barcode scanning and payment processing.</p>
+          </div>
+          <div class="box" style="min-height: 240px; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; background: #fff; border-radius: 10px; box-shadow: 0 8px 24px 0 rgba(16,30,54,0.08); padding: 22px 18px 18px 18px; margin: 0; box-sizing: border-box;">
+            <img src="CustomerInsights.png" alt="AI Assistant" class="feature-img" style="height: 60px; width: 62px; margin-bottom: 14px; object-fit: contain;">
+            <h3 class="feature-heading" style="font-size: 22px; font-weight: 700; margin-bottom: 10px; margin-top: 0;">AI Assistant</h3>
+            <p class="feature-para" style="font-size: 18px; color: #334155; line-height: 1.5; margin: 0;">
+                Offer 24/7 support and guidance to customers and staff with an integrated AI assistant for billing queries.
+                <br>
+                <span style="display:inline-block; margin-top:10px; color:#38bdf8; font-size:15px;">
+                    Smart help, instant answers, always available!
+                </span>
+            </p>
+          </div>
+        </div>
+        <div class="Feature" style="margin-top:32px;">
+          <h3 class="feature-heading">Ready to Transform Your Billing with AI?</h3>
+          <a href="index.html#getstarted" class="btn getstart" style="margin-top:14px;">Get Started with Smart Billing AI</a>
+        </div>
+      </section>
+
+    <!-- Scanner Section -->
+    <section id="scanner" class="py-16" style="background:;">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">
+                  <span style="color: #06b6d4;">Scan</span> &amp; <span style="color: #111">Shop</span>
+                </h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Scan barcodes directly with your device camera. Add items to your cart instantly without waiting in line.</p>
+
         <div class="benefits-header"
             style="display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 0;">
             <h2 class="revolutionary-f" style="margin-bottom: 12px;">Why Choose <span class="gradient-text">Smart
@@ -382,6 +548,7 @@
                         </span>
                     </p>
                 </div>
+
             </div>
             <div class="Feature" style="margin-top:32px;">
                 <h3 class="feature-heading">Ready to Transform Your Billing with AI?</h3>
@@ -401,6 +568,22 @@
                         to your cart instantly without waiting in line.</p>
                 </div>
 
+
+            <div class="flex flex-col lg:flex-row gap-8">
+                <div class="lg:w-1/2">
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-xl font-semibold text-gray-800">Barcode Scanner</h3>
+                            <div class="scanner-btn-bg" style="background: #06b6d4; padding: 6px 14px; border-radius: 8px; display: flex; align-items: center;">
+                                <button id="startButton" class="btn-primary px-4 py-2 rounded-md text-sm" style="background-color: #06b6d4; color: #fff; font-weight: 600; border: none;">Start Scanner</button>
+                            </div>
+                        </div>
+                        <div id="reader-container" class="scanner-container">
+                            <div id="reader"></div>
+                        </div>
+                        <div class="mt-4">
+                            <p class="text-sm text-gray-500">Point your camera at a product barcode to scan</p>
+
                 <div class="flex flex-col lg:flex-row gap-8">
                     <div class="lg:w-1/2">
                         <div class="bg-white rounded-lg shadow-lg p-6">
@@ -415,6 +598,7 @@
                             <div class="mt-4">
                                 <p class="text-sm text-gray-500">Point your camera at a product barcode to scan</p>
                             </div>
+
                         </div>
 
                         <div class="mt-8 bg-white rounded-lg shadow-lg p-6">
@@ -511,6 +695,124 @@
     </div>
 </section>
 
+
+    <!-- Checkout Section (restyled to match website) -->
+    <section id="checkout" class="py-16" style="background:#f8fafc;">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="revolutionary-f">
+                  <span style="color:#111;">Digital</span> <span class="gradient-text" style="color:#06b6d4;">Checkout</span>
+                </h2>
+                <p class="para-feature" style="color:#334155;">Complete your shopping quickly and securely with our digital checkout process.</p>
+            </div>
+            <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="flex flex-col md:flex-row">
+                    <div class="md:w-1/2 p-6 md:p-8">
+                        <h3 class="text-xl font-semibold mb-6" style="color:#06b6d4;">Payment Details</h3>
+                        <form class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Card Number</label>
+                                <input type="text" placeholder="1234 5678 9012 3456" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2" style="border-color:#06b6d4;">
+                            </div>
+                            <div class="flex gap-4">
+                                <div class="flex-1">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Expiry Date</label>
+                                    <input type="text" placeholder="MM/YY" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2" style="border-color:#06b6d4;">
+                                </div>
+                                <div class="flex-1">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">CVC</label>
+                                    <input type="text" placeholder="123" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2" style="border-color:#06b6d4;">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Cardholder Name</label>
+                                <input type="text" placeholder="John Smith" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2" style="border-color:#06b6d4;">
+                            </div>
+                            <div class="pt-2">
+                                <button type="button" id="complete-checkout" class="getstart btn w-full py-3 rounded-md font-semibold" style="background:linear-gradient(90deg, #06b6d4 0%, #38bdf8 100%); color:#fff;">Complete Checkout</button>
+                            </div>
+                        </form>
+                        <div class="mt-6 flex items-center justify-center space-x-4">
+                            <span class="text-gray-500 text-sm">Other payment methods:</span>
+                            <i class="fab fa-paypal text-blue-600 text-xl"></i>
+                            <i class="fab fa-apple-pay text-black text-xl"></i>
+                            <i class="fab fa-google-pay text-gray-700 text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 bg-gray-50 p-6 md:p-8">
+                        <h3 class="text-xl font-semibold mb-6" style="color:#06b6d4;">Order Summary</h3>
+                        <div id="checkout-items" class="space-y-4 mb-6">
+                            <div class="text-center py-6 text-gray-500">
+                                <p>No items in cart</p>
+                                <p class="text-sm mt-2">Go to scanner to add items</p>
+                            </div>
+                        </div>
+                        <div class="border-t pt-4">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-600">Subtotal</span>
+                                <span id="checkout-subtotal" class="font-semibold">$0.00</span>
+                            </div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-600">Tax (10%)</span>
+                                <span id="checkout-tax" class="font-semibold">$0.00</span>
+                            </div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-600">Shipping</span>
+                                <span class="font-semibold">$0.00</span>
+                            </div>
+                            <div class="flex justify-between mb-4 pt-2 border-t">
+                                <span class="text-gray-800 font-bold">Total</span>
+                                <span id="checkout-total" class="font-bold" style="color:#06b6d4;">$0.00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-us">
+        <h2 class="revolutionary-f">Get in <span class="gradient-text">Touch</span></h2>
+        <p class="para-feature">A seamless shopping experience from start to finish</p>
+        <div class="contact-grid">
+            <div class="contact-card">
+                <!-- SVG Email Icon -->
+                <div style="margin-bottom:18px;">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <rect width="24" height="24" rx="12" fill="#06b6d4" fill-opacity="0.12"/>
+                      <path d="M4 8.5V16a2 2 0 002 2h12a2 2 0 002-2V8.5l-8 5-8-5z" fill="#06b6d4"/>
+                      <path d="M20 6H4a2 2 0 00-2 2v.01l10 6.25 10-6.25V8a2 2 0 00-2-2z" fill="#06b6d4" fill-opacity="0.7"/>
+                    </svg>
+                </div>
+                <h4>Email Us</h4>
+                <p>info@smartcart.com</p>
+                <p style="color:#a0b1c9; font-size:1rem;">support@smartcart.com</p>
+            </div>
+            <div class="contact-card">
+                <!-- SVG Phone Icon -->
+                <div style="margin-bottom:18px;">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <rect width="24" height="24" rx="12" fill="#06b6d4" fill-opacity="0.12"/>
+                      <path d="M17.707 16.293l-2.387-2.387a1 1 0 00-1.414 0l-.793.793a11.042 11.042 0 01-4.95-4.95l.793-.793a1 1 0 000-1.414L7.707 6.293a1 1 0 00-1.414 0l-1.293 1.293a2 2 0 00-.293 2.293c1.5 3.5 4.5 6.5 8 8a2 2 0 002.293-.293l1.293-1.293a1 1 0 000-1.414z" fill="#06b6d4"/>
+                    </svg>
+                </div>
+                <h4>Call Us</h4>
+                <p>+91 (800) 123-4567</p>
+                <p>Mon-Fri, 9am-5pm IST</p>
+            </div>
+            <div class="contact-card">
+                <!-- SVG Location Icon -->
+                <div style="margin-bottom:18px;">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <rect width="24" height="24" rx="12" fill="#06b6d4" fill-opacity="0.12"/>
+                      <path d="M12 21s-6-5.686-6-10a6 6 0 1112 0c0 4.314-6 10-6 10zm0-9a2 2 0 100-4 2 2 0 000 4z" fill="#06b6d4"/>
+                    </svg>
+                </div>
+                <h4>Visit Us</h4>
+                <p>123 Innovation Drive</p>
+                <p>Tech City Katraj, Pune</p>
+            </div>
+
 <footer class="bg-gray-800 text-white py-8">
     <div class="container mx-auto px-4">
         <div class="flex flex-col md:flex-row justify-between items-center">
@@ -526,6 +828,7 @@
                 <a href="#how-it-works" class="footer-link">How It Works</a>
                 <a href="#features" class="footer-link">Features</a>
             </div>
+
         </div>
         <div class="border-t border-gray-700 mt-4 pt-4 text-center">
             <p class="text-sm text-gray-400">&copy; 2025 SmartCart. All rights reserved.</p>
@@ -534,5 +837,123 @@
 </footer>
 
     <script src="script.js"></script>
+    <script>
+        function toggleMenu() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        }
+    </script>
 </body>
+
+
 </html>
+
+<style>
+/* =====================
+   NAVBAR STYLES
+   ===================== */
+.navbar {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 10px 16px;
+  background-color: white;
+  position: relative;
+  z-index: 10;
+}
+.logo {
+  font-weight: bold;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.nav-links {
+  display: flex;
+  gap: 1.2rem;
+  list-style: none;
+  margin-left: auto;
+}
+.nav-links li a {
+  margin-left: -20px;
+  margin-right: 35px;
+  padding-bottom: 5px;
+  text-decoration: none;
+  color: var(--dark, #111);
+  font-weight: 550;
+  position: relative;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+.nav-links li a:hover {
+  color: var(--primary, #06b6d4);
+}
+.nav-links li a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background-color: var(--primary, #06b6d4);
+  transition: all 0.3s ease;
+}
+.nav-links li a:hover::after {
+  width: 100%;
+}
+.hamburger {
+  display: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+.navbar-getstart {
+  display: flex;
+  margin-left: 24px;
+}
+
+/* =====================
+   RESPONSIVE NAVBAR
+   ===================== */
+@media (max-width: 430px) {
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 55px;
+    left: 0;
+    width: 100%;
+    background: white;
+    padding: 10px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 20;
+  }
+  .nav-links.active {
+    display: flex;
+  }
+  .hamburger {
+    display: block;
+  }
+  .navbar {
+    flex-wrap: wrap;
+  }
+  .navbar-getstart {
+    display: none !important;
+  }
+}
+
+/* =====================
+   BASE STYLES
+   ===================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  overflow-x: hidden;
+  font-family: 'Poppins', sans-serif;
+}
+
+</html>
+

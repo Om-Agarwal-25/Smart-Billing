@@ -1,4 +1,77 @@
 // // Sample product database
+
+        const productDatabase = {
+            "8904109450327": { id: "8904109450327", name: "Organic Apple", price: 1.99, weight: 0.2, image: "https://cdn.jsdelivr.net/gh/Leoche/uikit-elements/src/images/food/apple-1.png" },
+            "223456789012": { id: "223456789012", name: "Whole Grain Bread", price: 3.49, weight: 0.5, image: "https://cdn.jsdelivr.net/gh/Leoche/uikit-elements/src/images/food/bread-1.png" },
+            "323456789012": { id: "323456789012", name: "Organic Milk", price: 4.29, weight: 1.0, image: "https://cdn.jsdelivr.net/gh/Leoche/uikit-elements/src/images/food/milk-1.png" },
+            "8901030865169": { id: "8901030865169", name: "Surf Excel", price: 5.99, weight: 0.250, image: "https://cdn.jsdelivr.net/gh/Leoche/uikit-elements/src/images/food/cheese-1.png" },
+            "523456789012": { id: "523456789012", name: "Free Range Eggs", price: 3.99, weight: 0.4, image: "https://cdn.jsdelivr.net/gh/Leoche/uikit-elements/src/images/food/eggs-1.png" },
+            "623456789012": { id: "623456789012", name: "Avocado", price: 2.49, weight: 0.2, image: "https://cdn.jsdelivr.net/gh/Leoche/uikit-elements/src/images/food/avocado-1.png" },
+            "723456789012": { id: "723456789012", name: "Chicken Breast", price: 8.99, weight: 0.5, image: "https://cdn.jsdelivr.net/gh/Leoche/uikit-elements/src/images/food/chicken-1.png" },
+            "823456789012": { id: "823456789012", name: "Chocolate Bar", price: 2.99, weight: 0.1, image: "https://cdn.jsdelivr.net/gh/Leoche/uikit-elements/src/images/food/chocolate-1.png" },
+            "923456789012": { id: "923456789012", name: "Potato Chips", price: 3.29, weight: 0.15, image: "https://cdn.jsdelivr.net/gh/Leoche/uikit-elements/src/images/food/chips-1.png" },
+            "023456789012": { id: "023456789012", name: "Orange Juice", price: 4.49, weight: 1.0, image: "https://cdn.jsdelivr.net/gh/Leoche/uikit-elements/src/images/food/juice-1.png" }
+        };
+
+        // Cart state
+        let cart = [];
+        let html5QrCode;
+        let isScanning = false;
+
+        // DOM Elements
+        const startButton = document.getElementById('startButton');
+        const cartItems = document.getElementById('cart-items');
+        const cartCount = document.getElementById('cart-count');
+        const subtotalElement = document.getElementById('subtotal');
+        const taxElement = document.getElementById('tax');
+        const totalElement = document.getElementById('total');
+        const checkoutItems = document.getElementById('checkout-items');
+        const checkoutSubtotal = document.getElementById('checkout-subtotal');
+        const checkoutTax = document.getElementById('checkout-tax');
+        const checkoutTotal = document.getElementById('checkout-total');
+        const expectedWeightElement = document.getElementById('expected-weight');
+        const actualWeightElement = document.getElementById('actual-weight');
+        const weightBar = document.getElementById('weight-bar');
+        const weightStatus = document.getElementById('weight-status');
+        const completeCheckoutButton = document.getElementById('complete-checkout');
+        const successModal = document.getElementById('success-modal');
+        const closeModalButton = document.getElementById('close-modal');
+        const continueShoppingButton = document.getElementById('continue-shopping');
+
+        // Initialize scanner
+        function initScanner() {
+            html5QrCode = new Html5Qrcode("reader");
+            
+            startButton.addEventListener('click', () => {
+                if (isScanning) {
+                    stopScanner();
+                } else {
+                    startScanner();
+                }
+            });
+        }
+
+        // Start the scanner
+        function startScanner() {
+            const qrConfig = { fps: 10, qrbox: { width: 250, height: 150 } };
+            html5QrCode.start(
+                { facingMode: "environment" },
+                qrConfig,
+                onScanSuccess,
+                onScanFailure
+            ).then(() => {
+                isScanning = true;
+                startButton.innerHTML = 'Stop Scanner';
+                startButton.classList.add('bg-red-600');
+                startButton.classList.remove('btn-primary');
+                // Change scanner button group background to red
+                var scannerBtnBg = document.getElementById('scannerBtnBg');
+                if (scannerBtnBg) scannerBtnBg.style.background = '#dc2626'; // Tailwind red-600
+            }).catch((err) => {
+                console.error('Error starting scanner:', err);
+                alert('Could not start scanner. Please ensure camera permissions are granted.');
+            });
+
 const productDatabase = {
     "8901030865169": { id: "8901030865169", name: "Surf Excel Bar", price: 0.99, weight: 0.250, image: "https://cdn.jsdelivr.net/gh/Leoche/uikit-elements/src/images/food/banana-1.png" },
     "8904109450327": { id: "8904109450327", name: "Organic Apple", price: 1.99, weight: 0.2, image: "https://cdn.jsdelivr.net/gh/Leoche/uikit-elements/src/images/food/apple-1.png" },
@@ -47,6 +120,7 @@ function initScanner() {
             stopScanner();
         } else {
             startScanner();
+
         }
     });
 }
@@ -95,6 +169,20 @@ function onScanSuccess(decodedText, decodedResult) {
     lastScannedBarcode = decodedText;
     lastScanTime = now;
 
+
+        // Stop the scanner
+        function stopScanner() {
+            html5QrCode.stop().then(() => {
+                isScanning = false;
+                startButton.innerHTML = 'Start Scanner';
+                startButton.classList.remove('bg-red-600');
+                startButton.classList.add('btn-primary');
+                // Change scanner button group background back to blue
+                var scannerBtnBg = document.getElementById('scannerBtnBg');
+                if (scannerBtnBg) scannerBtnBg.style.background = '#06b6d4';
+            }).catch((err) => {
+                console.error('Error stopping scanner:', err);
+
     // Check if the barcode exists in our database
     if (productDatabase[decodedText]) {
 
@@ -113,6 +201,7 @@ function onScanSuccess(decodedText, decodedResult) {
                 weight: product.weight,
                 image: product.image,
                 quantity: 1
+
             });
         }
         // Provide feedback
