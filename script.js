@@ -1,9 +1,9 @@
-        // // Sample product database
+// // Sample product database
         const productDatabase = {
             "8904109450327": { id: "8904109450327", name: "Organic Apple", price: 1.99, weight: 0.2, image: "https://cdn.jsdelivr.net/gh/Leoche/uikit-elements/src/images/food/apple-1.png" },
             "223456789012": { id: "223456789012", name: "Whole Grain Bread", price: 3.49, weight: 0.5, image: "https://cdn.jsdelivr.net/gh/Leoche/uikit-elements/src/images/food/bread-1.png" },
             "323456789012": { id: "323456789012", name: "Organic Milk", price: 4.29, weight: 1.0, image: "https://cdn.jsdelivr.net/gh/Leoche/uikit-elements/src/images/food/milk-1.png" },
-            "423456789012": { id: "423456789012", name: "Cheddar Cheese", price: 5.99, weight: 0.3, image: "https://cdn.jsdelivr.net/gh/Leoche/uikit-elements/src/images/food/cheese-1.png" },
+            "8901030865169": { id: "8901030865169", name: "Surf Excel", price: 5.99, weight: 0.250, image: "https://cdn.jsdelivr.net/gh/Leoche/uikit-elements/src/images/food/cheese-1.png" },
             "523456789012": { id: "523456789012", name: "Free Range Eggs", price: 3.99, weight: 0.4, image: "https://cdn.jsdelivr.net/gh/Leoche/uikit-elements/src/images/food/eggs-1.png" },
             "623456789012": { id: "623456789012", name: "Avocado", price: 2.49, weight: 0.2, image: "https://cdn.jsdelivr.net/gh/Leoche/uikit-elements/src/images/food/avocado-1.png" },
             "723456789012": { id: "723456789012", name: "Chicken Breast", price: 8.99, weight: 0.5, image: "https://cdn.jsdelivr.net/gh/Leoche/uikit-elements/src/images/food/chicken-1.png" },
@@ -53,7 +53,6 @@
         // Start the scanner
         function startScanner() {
             const qrConfig = { fps: 10, qrbox: { width: 250, height: 150 } };
-            
             html5QrCode.start(
                 { facingMode: "environment" },
                 qrConfig,
@@ -64,6 +63,9 @@
                 startButton.innerHTML = 'Stop Scanner';
                 startButton.classList.add('bg-red-600');
                 startButton.classList.remove('btn-primary');
+                // Change scanner button group background to red
+                var scannerBtnBg = document.getElementById('scannerBtnBg');
+                if (scannerBtnBg) scannerBtnBg.style.background = '#dc2626'; // Tailwind red-600
             }).catch((err) => {
                 console.error('Error starting scanner:', err);
                 alert('Could not start scanner. Please ensure camera permissions are granted.');
@@ -77,6 +79,9 @@
                 startButton.innerHTML = 'Start Scanner';
                 startButton.classList.remove('bg-red-600');
                 startButton.classList.add('btn-primary');
+                // Change scanner button group background back to blue
+                var scannerBtnBg = document.getElementById('scannerBtnBg');
+                if (scannerBtnBg) scannerBtnBg.style.background = '#06b6d4';
             }).catch((err) => {
                 console.error('Error stopping scanner:', err);
             });
