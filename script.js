@@ -1,15 +1,16 @@
 // // Sample product database
 const productDatabase = {
+    "8901030865169": { id: "8901030865169", name: "Surf Excel Bar", price: 0.99, weight: 0.250, image: "https://cdn.jsdelivr.net/gh/Leoche/uikit-elements/src/images/food/banana-1.png" },
     "8904109450327": { id: "8904109450327", name: "Organic Apple", price: 1.99, weight: 0.2, image: "https://cdn.jsdelivr.net/gh/Leoche/uikit-elements/src/images/food/apple-1.png" },
     "3154141194306": { id: "3154141194306", name: "Rounder", price: 3.49, weight: 0.5, image: "https://cdn.jsdelivr.net/gh/Leoche/uikit-elements/src/images/food/bread-1.png" },
     "4549526613845": { id: "4549526613845", name: "Calculator", price: 4.29, weight: 1.0, image: "https://cdn.jsdelivr.net/gh/Leoche/uikit-elements/src/images/food/milk-1.png" },
-    "423456789012": { id: "423456789012", name: "Cheddar Cheese", price: 5.99, weight: 0.3, image: "https://cdn.jsdelivr.net/gh/Leoche/uikit-elements/src/images/food/cheese-1.png" },
+    "8906098990587": { id: "8906098990587", name: "Cheddar Cheese", price: 5.99, weight: 0.3, image: "https://cdn.jsdelivr.net/gh/Leoche/uikit-elements/src/images/food/cheese-1.png" },
     "523456789012": { id: "523456789012", name: "Free Range Eggs", price: 3.99, weight: 0.4, image: "https://cdn.jsdelivr.net/gh/Leoche/uikit-elements/src/images/food/eggs-1.png" },
     "623456789012": { id: "623456789012", name: "Avocado", price: 2.49, weight: 0.2, image: "https://cdn.jsdelivr.net/gh/Leoche/uikit-elements/src/images/food/avocado-1.png" },
     "723456789012": { id: "723456789012", name: "Chicken Breast", price: 8.99, weight: 0.5, image: "https://cdn.jsdelivr.net/gh/Leoche/uikit-elements/src/images/food/chicken-1.png" },
     "823456789012": { id: "823456789012", name: "Chocolate Bar", price: 2.99, weight: 0.1, image: "https://cdn.jsdelivr.net/gh/Leoche/uikit-elements/src/images/food/chocolate-1.png" },
     "923456789012": { id: "923456789012", name: "Potato Chips", price: 3.29, weight: 0.15, image: "https://cdn.jsdelivr.net/gh/Leoche/uikit-elements/src/images/food/chips-1.png" },
-    "023456789012": { id: "023456789012", name: "Orange Juice", price: 4.49, weight: 1.0, image: "https://cdn.jsdelivr.net/gh/Leoche/uikit-elements/src/images/food/juice-1.png" }
+    // "023456789012": { id: "023456789012", name: "Orange Juice", price: 4.49, weight: 1.0, image: "https://cdn.jsdelivr.net/gh/Leoche/uikit-elements/src/images/food/juice-1.png" }
 };
 
 // Cart state
@@ -216,40 +217,53 @@ function updateTotals() {
     checkoutTotal.textContent = `$${total.toFixed(2)}`;
 }
 
-// Update trolley weight
-function updateTrolleyWeight() {
-    const expectedWeight = cart.reduce((sum, item) => sum + (item.weight * item.quantity), 0);
-    // Simulate a small difference for demonstration purposes
-    const randomVariation = (Math.random() * 0.2) - 0.1; // Between -0.1 and 0.1
-    const actualWeight = expectedWeight + randomVariation;
+/// Update trolley weight using live ESP8266 data
+async function updateTrolleyWeight() {
+    const expectedWeight = cart.reduce((sum, item) => sum + (item.weight * item.quantity), 0); // in kg
 
-    expectedWeightElement.textContent = `${expectedWeight.toFixed(2)} kg`;
-    actualWeightElement.textContent = `${actualWeight.toFixed(2)} kg`;
+    try {
+        // Replace <ESP_IP> with actual IP of ESP8266
+        const response = await fetch('http://192.168.201.189/get_weight');
+        const data = await response.json();
 
-    // Update weight bar
-    const percentage = Math.min(100, (actualWeight / expectedWeight) * 100);
-    weightBar.style.width = `${percentage}%`;
+        let actualWeightGrams = parseFloat(data.weight); // ESP sends in grams
+        let actualWeight = actualWeightGrams / 1000.0; // Convert to kg
 
-    // Update status
-    const weightDifference = Math.abs(expectedWeight - actualWeight);
+        // Update DOM
+        expectedWeightElement.textContent = `${expectedWeight.toFixed(2)} kg`;
+        actualWeightElement.textContent = `${actualWeight.toFixed(2)} kg`;
 
-    if (weightDifference > 0.3) {
-        // Significant weight difference
-        weightStatus.className = 'text-sm font-medium text-red-600';
-        weightStatus.innerHTML = '<i class="fas fa-exclamation-circle mr-1"></i> Weight mismatch';
-        weightBar.style.background = 'linear-gradient(90deg, #EF4444 0%, #F87171 100%)';
-    } else if (weightDifference > 0.1) {
-        // Small weight difference
-        weightStatus.className = 'text-sm font-medium text-yellow-600';
-        weightStatus.innerHTML = '<i class="fas fa-exclamation-triangle mr-1"></i> Weight difference detected';
-        weightBar.style.background = 'linear-gradient(90deg, #F59E0B 0%, #FBBF24 100%)';
-    } else {
-        // Weight ok
-        weightStatus.className = 'text-sm font-medium text-green-600';
-        weightStatus.innerHTML = '<i class="fas fa-check-circle mr-1"></i> Weight verified';
-        weightBar.style.background = 'linear-gradient(90deg, #10B981 0%, #059669 100%)';
+        // Update progress bar
+        const percentage = expectedWeight > 0 ? Math.min(100, (actualWeight / expectedWeight) * 100) : 0;
+        weightBar.style.width = `${percentage}%`;
+
+        // Update status based on difference
+        const weightDifference = Math.abs(expectedWeight - actualWeight);
+
+        if (weightDifference > 0.3) {
+            weightStatus.className = 'text-sm font-medium text-red-600';
+            weightStatus.innerHTML = '<i class="fas fa-exclamation-circle mr-1"></i> Weight mismatch';
+            weightBar.style.background = 'linear-gradient(90deg, #EF4444 0%, #F87171 100%)';
+        } else if (weightDifference > 0.1) {
+            weightStatus.className = 'text-sm font-medium text-yellow-600';
+            weightStatus.innerHTML = '<i class="fas fa-exclamation-triangle mr-1"></i> Weight difference detected';
+            weightBar.style.background = 'linear-gradient(90deg, #F59E0B 0%, #FBBF24 100%)';
+        } else {
+            weightStatus.className = 'text-sm font-medium text-green-600';
+            weightStatus.innerHTML = '<i class="fas fa-check-circle mr-1"></i> Weight verified';
+            weightBar.style.background = 'linear-gradient(90deg, #10B981 0%, #059669 100%)';
+        }
+
+    } catch (error) {
+        console.error("Error fetching weight from ESP8266:", error);
+        weightStatus.className = 'text-sm font-medium text-gray-500';
+        weightStatus.innerHTML = '<i class="fas fa-times-circle mr-1"></i> Could not read weight';
+        actualWeightElement.textContent = `-- kg`;
+        weightBar.style.width = `0%`;
+        weightBar.style.background = '#ccc';
     }
 }
+
 
 // Play success sound
 function playSuccessSound() {
